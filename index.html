@@ -1284,6 +1284,92 @@ body {
     max-width: 100%;
   }
 }
+
+/* === 设置面板 === */
+.settings-panel {
+  max-height: 85vh;
+}
+
+.settings-status {
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+.settings-status.configured {
+  background: rgba(34,197,94,0.1);
+  color: var(--success);
+  border: 1px solid rgba(34,197,94,0.2);
+}
+
+.settings-status.unconfigured {
+  background: rgba(245,158,11,0.1);
+  color: var(--warning);
+  border: 1px solid rgba(245,158,11,0.2);
+}
+
+.settings-key-wrap {
+  display: flex;
+  gap: 0;
+  align-items: center;
+}
+
+.settings-key-wrap .form-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+  flex: 1;
+}
+
+.settings-key-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: auto;
+  min-height: 42px;
+  background: var(--bg-input);
+  border: 1px solid var(--border-input);
+  border-top-right-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: all var(--transition);
+}
+
+.settings-key-toggle:hover {
+  background: var(--bg-card-hover);
+  color: var(--text-secondary);
+}
+
+.settings-hint-box {
+  padding: 12px 14px;
+  background: var(--accent-light);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.settings-hint-box a {
+  color: var(--text-accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.settings-hint-box a:hover {
+  text-decoration: underline;
+}
+
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-top: 1px solid var(--border-color);
+}
 </style>
 </head>
 <body x-data="createApp()" :class="{ dark: theme === 'dark' }">
@@ -1303,6 +1389,9 @@ body {
       </button>
       <button class="history-btn" @click="toggleHistory()" title="历史记录">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </button>
+      <button class="history-btn" :style="!Api.isConfigured() ? 'color:#f59e0b' : ''" @click="toggleSettings()" title="API 设置">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
     </div>
   </header>
@@ -1740,6 +1829,119 @@ body {
               <div class="history-item-summary" x-text="item.summary"></div>
             </div>
           </template>
+        </div>
+      </div>
+    </div>
+  </template>
+  <template x-if="showSettings">
+    <div class="modal-overlay" @click.self="closeSettings()">
+      <div class="modal-panel settings-panel">
+        <div class="modal-header">
+          <h3>API 设置</h3>
+          <button class="btn btn-ghost" @click="closeSettings()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="settings-status" :class="Api.isConfigured() ? 'configured' : 'unconfigured'">
+            <template x-if="Api.isConfigured()">
+              <span>API 已配置</span>
+            </template>
+            <template x-if="!Api.isConfigured()">
+              <span>未配置 API，生成功能不可用</span>
+            </template>
+          </div>
+          <div class="form-group">
+            <label class="form-label">连接模式</label>
+            <div class="tag-select">
+              <div class="tag-item" :class="{ selected: settings.mode === 'direct' }" @click="settings.mode = 'direct'">直连模式</div>
+              <div class="tag-item" :class="{ selected: settings.mode === 'proxy' }" @click="settings.mode = 'proxy'">代理模式（推荐）</div>
+            </div>
+          </div>
+          <template x-if="settings.mode === 'direct'">
+            <div>
+              <div class="form-group">
+                <label class="form-label">AI 服务商</label>
+                <select class="form-select" x-model="settings.apiProvider">
+                  <template x-for="p in providerList" :key="p.value">
+                    <option :value="p.value" x-text="p.label"></option>
+                  </template>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">API Key<span class="required">*</span></label>
+                <div class="settings-key-wrap">
+                  <input class="form-input" :type="showKeyVisible ? 'text' : 'password'" x-model="settings.apiKey" placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxx">
+                  <button class="settings-key-toggle" @click="showKeyVisible = !showKeyVisible" type="button">
+                    <svg x-show="!showKeyVisible" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                    <svg x-show="showKeyVisible" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                  </button>
+                </div>
+                <p class="form-hint">Key 仅保存在浏览器本地，不会上传到任何服务器</p>
+              </div>
+
+              <div class="form-group" x-show="!isCustomProvider">
+                <label class="form-label">模型名称</label>
+                <input class="form-input" type="text" x-model="settings.apiModel" :placeholder="currentProviderModel || '使用默认模型'">
+                <p class="form-hint">留空使用默认模型：<span x-text="currentProviderModel"></span></p>
+              </div>
+
+              <template x-if="isCustomProvider">
+                <div>
+                  <div class="form-group">
+                    <label class="form-label">API 地址<span class="required">*</span></label>
+                    <input class="form-input" type="text" x-model="settings.apiBaseUrl" placeholder="https://your-api.example.com">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">模型名称<span class="required">*</span></label>
+                    <input class="form-input" type="text" x-model="settings.apiModel" placeholder="gpt-4o-mini">
+                  </div>
+                </div>
+              </template>
+
+              <div class="form-group">
+                <label class="form-label">CORS 代理（可选）</label>
+                <input class="form-input" type="text" x-model="settings.corsProxy" placeholder="https://your-cors-proxy.com">
+                <p class="form-hint">国内 API 通常有跨域限制。可填入 CORS 代理地址来解决，如自建代理或 <a href="https://github.com/Zibri/cloudflare-cors-anywhere" target="_blank" rel="noopener" style="color:var(--text-accent)">Cloudflare CORS Proxy</a></p>
+              </div>
+
+              <div class="settings-hint-box">
+                <div x-show="settings.apiProvider === 'deepseek'">前往 <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">platform.deepseek.com</a> 获取 API Key。注意：DeepSeek 有跨域限制，需配置 CORS 代理或使用代理模式。</div>
+                <div x-show="settings.apiProvider === 'openai'">前往 <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com</a> 获取 API Key。OpenAI 支持 CORS，可直接使用。</div>
+                <div x-show="settings.apiProvider === 'moonshot'">前往 <a href="https://platform.moonshot.cn/console/api-keys" target="_blank" rel="noopener">platform.moonshot.cn</a> 获取 API Key。注意：Moonshot 有跨域限制。</div>
+                <div x-show="settings.apiProvider === 'qwen'">前往 <a href="https://dashscope.console.aliyun.com/apiKey" target="_blank" rel="noopener">dashscope.console.aliyun.com</a> 获取 API Key。注意：通义千问有跨域限制。</div>
+                <div x-show="settings.apiProvider === 'zhipu'">前往 <a href="https://open.bigmodel.cn/usercenter/apikeys" target="_blank" rel="noopener">open.bigmodel.cn</a> 获取 API Key，glm-4-flash 模型免费。注意：有跨域限制。</div>
+                <div x-show="settings.apiProvider === 'custom'">填写兼容 OpenAI 格式的 API 地址和模型名称。</div>
+              </div>
+            </div>
+          </template>
+          <template x-if="settings.mode === 'proxy'">
+            <div>
+              <div class="form-group">
+                <label class="form-label">代理服务地址<span class="required">*</span></label>
+                <input class="form-input" type="text" x-model="settings.proxyUrl" placeholder="https://your-worker.your-name.workers.dev">
+                <p class="form-hint">填写自建的 Cloudflare Worker 代理地址，API Key 在后端配置更安全</p>
+              </div>
+              <div class="settings-hint-box">
+                <div><strong>代理模式部署方法：</strong><br>
+                1. 将项目中的 <code>worker/index.js</code> 部署到 Cloudflare Workers<br>
+                2. 在 Worker 环境变量中设置 <code>DEEPSEEK_API_KEY</code>（你的 API Key）<br>
+                3. 可选设置 <code>AI_MODEL</code>（默认 deepseek-chat）和 <code>API_BASE_URL</code>（默认 DeepSeek）<br>
+                4. 将 Worker 的访问地址填入上方
+                </div>
+              </div>
+            </div>
+          </template>
+
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-ghost" style="color:var(--danger)" @click="clearApiKey()">清除设置</button>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-secondary" @click="closeSettings()">取消</button>
+            <button class="btn btn-primary" @click="saveSettings()">保存设置</button>
+          </div>
         </div>
       </div>
     </div>
@@ -2217,142 +2419,276 @@ const SYSTEM_PROMPTS = {
 </script>
   <script>
 /**
- * API 调用模块 - 流式调用 AI 生成脚本
+ * API 调用模块 - 支持代理模式和直连模式
+ * 
+ * 代理模式（推荐）：通过自建 Cloudflare Worker 转发，API Key 安全不暴露
+ * 直连模式：浏览器直接调用 API，需要服务商支持 CORS 或使用 CORS 代理
  */
 
 const Api = {
-  /**
-   * 流式生成脚本
-   * @param {Object} params - 请求参数
-   * @param {string} params.mode - 'huixiao' | 'baokuan'
-   * @param {Object} params.formData - 表单数据
-   * @param {string} params.fileTexts - 上传文件的文本内容
-   * @param {Function} onChunk - 每次收到文本片段的回调
-   * @param {Function} onDone - 完成回调
-   * @param {Function} onError - 错误回调
-   */
-  async generate({ mode, formData, fileTexts }, { onChunk, onDone, onError }) {
+  // 预设提供商（用于代理模式下选择默认模型）
+  PROVIDERS: {
+    deepseek:  { name: 'DeepSeek',       model: 'deepseek-chat' },
+    openai:    { name: 'OpenAI',          model: 'gpt-4o-mini' },
+    moonshot:  { name: 'Moonshot',        model: 'moonshot-v1-8k' },
+    qwen:      { name: '通义千问',         model: 'qwen-turbo' },
+    zhipu:     { name: '智谱 GLM',        model: 'glm-4-flash' },
+    custom:    { name: '自定义',           model: '' },
+  },
+
+  getSettings() {
     try {
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode, formData, fileTexts }),
-      });
+      return JSON.parse(localStorage.getItem('vs_api_settings')) || {};
+    } catch { return {}; }
+  },
 
-      if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.error || `请求失败 (${response.status})`);
+  saveSettings(settings) {
+    localStorage.setItem('vs_api_settings', JSON.stringify(settings));
+  },
+
+  isConfigured() {
+    const s = this.getSettings();
+    if (s.mode === 'proxy') return !!s.proxyUrl;
+    return !!s.apiKey;
+  },
+
+  // === 构建 User Prompt ===
+  buildUserPrompt(mode, formData, fileTexts, previousResult, refineInstruction) {
+    const M = {
+      PLATFORM:   { douyin: '抖音', shipinhao: '视频号', xiaohongshu: '小红书' },
+      STYLE:      { pain_point: '痛点切入型', factory: '工厂实拍型', compare: '对比评测型', data: '数据佐证型', testimonial: '客户见证型' },
+      TYPE:       { factory_show: '工厂实拍展示型', product_review: '产品对比评测型', pain_solution: '痛点解决教程型', knowledge: '行业知识科普型', customer_case: '客户案例见证型', china_vs_world: '中国制造对比型', unboxing: '开箱使用场景型' },
+      GOAL:       { followers: '涨粉', leads: '获客', brand: '品牌曝光', traffic: '引流到阿里店铺' },
+      MARKET:     { southeast_asia: '东南亚', middle_east: '中东', europe_america: '欧美', africa: '非洲', south_america: '南美', global: '全球' },
+      PREFERENCE: { factory_strength: '工厂实力展示', product_detail: '产品细节特写', effect_compare: '使用效果对比', customer_feedback: '客户反馈', industry_data: '行业数据' },
+      TARGET:     { purchaser: '海外采购商', ecommerce: '跨境电商卖家', contractor: '工程承包商', agent: '品牌代理商', wholesaler: '零售批发商' },
+    };
+
+    let prompt = '';
+    if (previousResult && refineInstruction) {
+      prompt += `以下是之前生成的脚本：\n\n${previousResult}\n\n`;
+      prompt += `用户要求微调：${refineInstruction}\n\n`;
+      prompt += `请根据用户的要求对脚本进行调整，保持整体结构不变，仅修改需要调整的部分。直接输出调整后的完整脚本。\n`;
+      return prompt;
+    }
+
+    prompt += `以下是需要生成脚本的基本信息：\n\n`;
+    prompt += `- 城市：${formData.city}\n`;
+    prompt += `- 产品行业：${formData.industry}\n`;
+
+    if (mode === 'huixiao') {
+      const platforms = (formData.platforms || []).map(p => M.PLATFORM[p] || p).join('、');
+      prompt += `- 投放平台：${platforms}\n`;
+      prompt += `- 视频时长：${formData.duration}秒\n`;
+      if (formData.sellingPoints) prompt += `- 产品卖点：${formData.sellingPoints}\n`;
+      if (formData.targetCustomer) {
+        const target = formData.targetCustomer === 'custom'
+          ? formData.targetCustomerCustom
+          : (M.TARGET[formData.targetCustomer] || formData.targetCustomer);
+        prompt += `- 目标客户：${target}\n`;
       }
+      if (formData.style) prompt += `- 脚本风格：${M.STYLE[formData.style] || formData.style}\n`;
+    } else {
+      if (formData.videoType) prompt += `- 视频类型：${M.TYPE[formData.videoType] || formData.videoType}\n`;
+      prompt += `- 视频时长：${formData.duration}秒\n`;
+      if (formData.videoGoal) prompt += `- 视频目标：${M.GOAL[formData.videoGoal] || formData.videoGoal}\n`;
+      if (formData.contentPreference?.length) {
+        const prefs = formData.contentPreference.map(p => M.PREFERENCE[p] || p).join('、');
+        prompt += `- 内容偏好：${prefs}\n`;
+      }
+      if (formData.targetMarket) prompt += `- 目标市场：${M.MARKET[formData.targetMarket] || formData.targetMarket}\n`;
+    }
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
-      let fullText = '';
+    if (formData.extraNotes) prompt += `- 补充说明：${formData.extraNotes}\n`;
+    if (fileTexts && fileTexts.trim()) prompt += `\n以下是用户上传的参考资料内容：\n\n${fileTexts}\n`;
+    prompt += `\n请根据以上信息生成完整的视频脚本。`;
+    return prompt;
+  },
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+  // === SSE 流解析 ===
+  async _readSSE(response, { onChunk, onDone, onError }) {
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = '';
+    let fullText = '';
 
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || '';
-
-        for (const line of lines) {
-          const trimmed = line.trim();
-          if (!trimmed || !trimmed.startsWith('data:')) continue;
-
-          const data = trimmed.slice(5).trim();
-          if (data === '[DONE]') continue;
-
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed || !trimmed.startsWith('data:')) continue;
+        const data = trimmed.slice(5).trim();
+        if (data === '[DONE]') continue;
+        try {
+          const parsed = JSON.parse(data);
+          const content = parsed.choices?.[0]?.delta?.content;
+          if (content) { fullText += content; onChunk(fullText); }
+        } catch { /* ignore */ }
+      }
+    }
+    // 处理剩余 buffer
+    if (buffer.trim()) {
+      const trimmed = buffer.trim();
+      if (trimmed.startsWith('data:')) {
+        const data = trimmed.slice(5).trim();
+        if (data !== '[DONE]') {
           try {
             const parsed = JSON.parse(data);
             const content = parsed.choices?.[0]?.delta?.content;
-            if (content) {
-              fullText += content;
-              onChunk(fullText);
-            }
-          } catch {
-            // 忽略解析错误，可能是不完整的 JSON
-          }
+            if (content) { fullText += content; onChunk(fullText); }
+          } catch { /* ignore */ }
         }
       }
-
-      // 处理 buffer 中剩余的内容
-      if (buffer.trim()) {
-        const trimmed = buffer.trim();
-        if (trimmed.startsWith('data:')) {
-          const data = trimmed.slice(5).trim();
-          if (data !== '[DONE]') {
-            try {
-              const parsed = JSON.parse(data);
-              const content = parsed.choices?.[0]?.delta?.content;
-              if (content) {
-                fullText += content;
-                onChunk(fullText);
-              }
-            } catch { /* ignore */ }
-          }
-        }
-      }
-
-      onDone(fullText);
-    } catch (err) {
-      onError(err.message);
     }
+    onDone(fullText);
   },
 
-  /**
-   * 微调/重新生成（基于已有结果追加指令）
-   */
-  async refine({ mode, formData, fileTexts, previousResult, refineInstruction }, { onChunk, onDone, onError }) {
+  // === 代理模式：调用自建后端 ===
+  async _proxyChat(systemPrompt, userPrompt, callbacks) {
+    const settings = this.getSettings();
+    const proxyUrl = settings.proxyUrl.replace(/\/+$/, '');
+
+    if (!proxyUrl) {
+      callbacks.onError('请先在设置中配置后端代理地址');
+      return;
+    }
+
     try {
-      const response = await fetch('/api/generate', {
+      const response = await fetch(`${proxyUrl}/api/generate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          mode, formData, fileTexts,
-          previousResult,
-          refineInstruction,
+          systemPrompt,
+          userPrompt,
         }),
       });
 
       if (!response.ok) {
-        const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.error || `请求失败 (${response.status})`);
+        let errMsg = `代理服务错误 (${response.status})`;
+        try {
+          const errJson = JSON.parse(await response.text());
+          errMsg = errJson.error || errMsg;
+        } catch {}
+        callbacks.onError(errMsg);
+        return;
       }
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = '';
-      let fullText = '';
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split('\n');
-        buffer = lines.pop() || '';
-
-        for (const line of lines) {
-          const trimmed = line.trim();
-          if (!trimmed || !trimmed.startsWith('data:')) continue;
-          const data = trimmed.slice(5).trim();
-          if (data === '[DONE]') continue;
-          try {
-            const parsed = JSON.parse(data);
-            const content = parsed.choices?.[0]?.delta?.content;
-            if (content) {
-              fullText += content;
-              onChunk(fullText);
-            }
-          } catch { /* ignore */ }
-        }
-      }
-
-      onDone(fullText);
+      await this._readSSE(response, callbacks);
     } catch (err) {
-      onError(err.message);
+      callbacks.onError(err.message || '网络请求失败，请检查代理地址');
+    }
+  },
+
+  // === 直连模式：浏览器直接调用 LLM API ===
+  async _directChat(systemPrompt, userPrompt, callbacks) {
+    const settings = this.getSettings();
+    const { apiProvider = 'deepseek', apiKey, apiModel, apiBaseUrl, corsProxy } = settings;
+
+    if (!apiKey) {
+      callbacks.onError('请先在设置中配置 API Key');
+      return;
+    }
+
+    const provider = this.PROVIDERS[apiProvider] || this.PROVIDERS.deepseek;
+    let baseUrl;
+    if (apiProvider === 'custom') {
+      baseUrl = (apiBaseUrl || '').replace(/\/+$/, '');
+    } else {
+      // 预设服务商的默认 API 地址
+      const BASE_URLS = {
+        deepseek: 'https://api.deepseek.com',
+        openai: 'https://api.openai.com',
+        moonshot: 'https://api.moonshot.cn',
+        qwen: 'https://dashscope.aliyuncs.com/compatible-mode',
+        zhipu: 'https://open.bigmodel.cn/api/paas',
+      };
+      baseUrl = BASE_URLS[apiProvider] || '';
+    }
+
+    if (!baseUrl) {
+      callbacks.onError('请填写 API 地址');
+      return;
+    }
+
+    const model = apiModel || provider.model;
+    if (!model) {
+      callbacks.onError('请填写模型名称');
+      return;
+    }
+
+    // 如果配置了 CORS 代理，在 URL 前加代理前缀
+    let fetchUrl;
+    if (corsProxy) {
+      const proxy = corsProxy.replace(/\/+$/, '');
+      fetchUrl = `${proxy}/${baseUrl}/v1/chat/completions`;
+    } else {
+      fetchUrl = `${baseUrl}/v1/chat/completions`;
+    }
+
+    try {
+      const response = await fetch(fetchUrl, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+          stream: true,
+          temperature: 0.7,
+          max_tokens: 4000,
+        }),
+      });
+
+      if (!response.ok) {
+        let errMsg = `AI 服务错误 (${response.status})`;
+        try {
+          const errJson = JSON.parse(await response.text());
+          errMsg = errJson.error?.message || errMsg;
+        } catch {}
+        callbacks.onError(errMsg);
+        return;
+      }
+
+      await this._readSSE(response, callbacks);
+    } catch (err) {
+      const msg = err.message || '';
+      if (msg.includes('Failed to fetch') || msg.includes('NetworkError')) {
+        callbacks.onError('网络请求失败，可能是跨域(CORS)限制。请尝试切换到代理模式，或配置 CORS 代理地址。');
+      } else {
+        callbacks.onError(msg);
+      }
+    }
+  },
+
+  // === 对外接口 ===
+  async generate({ mode, formData, fileTexts }, callbacks) {
+    const systemPrompt = SYSTEM_PROMPTS[mode] || SYSTEM_PROMPTS.huixiao;
+    const userPrompt = this.buildUserPrompt(mode, formData, fileTexts);
+    const settings = this.getSettings();
+    if (settings.mode === 'proxy') {
+      await this._proxyChat(systemPrompt, userPrompt, callbacks);
+    } else {
+      await this._directChat(systemPrompt, userPrompt, callbacks);
+    }
+  },
+
+  async refine({ mode, formData, fileTexts, previousResult, refineInstruction }, callbacks) {
+    const systemPrompt = SYSTEM_PROMPTS[mode] || SYSTEM_PROMPTS.huixiao;
+    const userPrompt = this.buildUserPrompt(mode, formData, fileTexts, previousResult, refineInstruction);
+    const settings = this.getSettings();
+    if (settings.mode === 'proxy') {
+      await this._proxyChat(systemPrompt, userPrompt, callbacks);
+    } else {
+      await this._directChat(systemPrompt, userPrompt, callbacks);
     }
   },
 };
@@ -2420,6 +2756,19 @@ function createApp() {
     showHistory: false,
     history: [],
 
+    // === 设置面板 ===
+    showSettings: false,
+    showKeyVisible: false,
+    settings: {
+      mode: 'direct', // 'proxy' | 'direct'
+      apiProvider: 'deepseek',
+      apiKey: '',
+      apiModel: '',
+      apiBaseUrl: '',
+      corsProxy: '',
+      proxyUrl: '',
+    },
+
     // === 初始化 ===
     init() {
       // 加载主题
@@ -2436,6 +2785,16 @@ function createApp() {
         const saved = localStorage.getItem('vs_history');
         if (saved) this.history = JSON.parse(saved);
       } catch { /* ignore */ }
+
+      // 加载 API 设置
+      const savedSettings = Api.getSettings();
+      if (savedSettings.mode) this.settings.mode = savedSettings.mode;
+      if (savedSettings.apiProvider) this.settings.apiProvider = savedSettings.apiProvider;
+      if (savedSettings.apiKey) this.settings.apiKey = savedSettings.apiKey;
+      if (savedSettings.apiModel) this.settings.apiModel = savedSettings.apiModel;
+      if (savedSettings.apiBaseUrl) this.settings.apiBaseUrl = savedSettings.apiBaseUrl;
+      if (savedSettings.corsProxy) this.settings.corsProxy = savedSettings.corsProxy;
+      if (savedSettings.proxyUrl) this.settings.proxyUrl = savedSettings.proxyUrl;
 
       // 切换 Tab 时重置步骤和结果
       this.$watch('activeTab', () => {
@@ -2819,6 +3178,63 @@ function createApp() {
     clearAllHistory() {
       this.history = [];
       localStorage.removeItem('vs_history');
+    },
+
+    // === 设置面板 ===
+    toggleSettings() {
+      this.showSettings = !this.showSettings;
+    },
+
+    closeSettings() {
+      this.showSettings = false;
+    },
+
+    get providerList() {
+      return Object.entries(Api.PROVIDERS).map(([key, val]) => ({ value: key, label: val.name }));
+    },
+
+    get currentProviderModel() {
+      const provider = Api.PROVIDERS[this.settings.apiProvider];
+      return provider ? provider.model : '';
+    },
+
+    get isCustomProvider() {
+      return this.settings.apiProvider === 'custom';
+    },
+
+    saveSettings() {
+      if (this.settings.mode === 'proxy') {
+        if (!this.settings.proxyUrl.trim()) {
+          Utils.showToast('请输入代理地址', 'error');
+          return;
+        }
+      } else {
+        if (!this.settings.apiKey.trim()) {
+          Utils.showToast('请输入 API Key', 'error');
+          return;
+        }
+      }
+      Api.saveSettings({
+        mode: this.settings.mode,
+        apiProvider: this.settings.apiProvider,
+        apiKey: this.settings.apiKey.trim(),
+        apiModel: this.settings.apiModel.trim(),
+        apiBaseUrl: this.settings.apiBaseUrl.trim(),
+        corsProxy: this.settings.corsProxy.trim(),
+        proxyUrl: this.settings.proxyUrl.trim(),
+      });
+      Utils.showToast('设置已保存', 'success');
+      this.closeSettings();
+    },
+
+    clearApiKey() {
+      this.settings.apiKey = '';
+      this.settings.apiModel = '';
+      this.settings.apiBaseUrl = '';
+      this.settings.corsProxy = '';
+      this.settings.proxyUrl = '';
+      Api.saveSettings({ ...this.settings });
+      Utils.showToast('设置已清除', 'success');
     },
 
     // === 辅助 ===
