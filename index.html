@@ -1,0 +1,2849 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>爆款视频脚本生成工作台</title>
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSI+CiAgPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMTAiIGZpbGw9IiM0ZjQ2ZTUiLz4KICA8cGF0aCBkPSJNMTIgMTRsNC00IDQgNE0xNiAxMHYxMk0yNCAyNmwtNCA0LTQtNE0yMCAzMFYxOCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iMzAiIGN5PSIxMiIgcj0iNCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEuOCIgZmlsbD0ibm9uZSIvPgogIDxwYXRoIGQ9Ik0yOC41IDEyaDNNMzAgMTAuNXYzIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+" type="image/svg+xml">
+  <style>
+/* ============================================
+   爆款视频脚本生成工作台 - 自定义样式
+   支持: 浅色/深色主题 + 响应式
+   ============================================ */
+
+/* === CSS 变量（浅色默认） === */
+:root {
+  --bg-primary: #f1f5f9;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8fafc;
+  --bg-input: #f1f5f9;
+  --bg-input-focus: #ffffff;
+  --bg-tab-bar: #ffffff;
+  --bg-tab-active: #4f46e5;
+  --bg-tab-inactive: transparent;
+  --bg-topbar: #0f172a;
+  --bg-modal-overlay: rgba(0,0,0,0.4);
+
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --text-tertiary: #94a3b8;
+  --text-on-primary: #ffffff;
+  --text-on-dark: #f1f5f9;
+  --text-tab-active: #ffffff;
+  --text-tab-inactive: #64748b;
+  --text-accent: #4f46e5;
+
+  --border-color: #e2e8f0;
+  --border-focus: #4f46e5;
+  --border-input: #cbd5e1;
+
+  --accent: #4f46e5;
+  --accent-hover: #4338ca;
+  --accent-light: #eef2ff;
+  --accent-subtle: #c7d2fe;
+  --danger: #ef4444;
+  --success: #22c55e;
+  --warning: #f59e0b;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+
+  --transition: 200ms ease-out;
+  --font-sans: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+}
+
+/* === 深色主题 === */
+.dark {
+  --bg-primary: #0f172a;
+  --bg-card: #1e293b;
+  --bg-card-hover: #263348;
+  --bg-input: #334155;
+  --bg-input-focus: #3b4c63;
+  --bg-tab-bar: #1e293b;
+  --bg-tab-active: #6366f1;
+  --bg-tab-inactive: transparent;
+  --bg-topbar: #020617;
+  --bg-modal-overlay: rgba(0,0,0,0.6);
+
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+  --text-on-dark: #f1f5f9;
+  --text-tab-active: #ffffff;
+  --text-tab-inactive: #94a3b8;
+  --text-accent: #818cf8;
+
+  --border-color: #334155;
+  --border-focus: #818cf8;
+  --border-input: #475569;
+
+  --accent: #6366f1;
+  --accent-hover: #818cf8;
+  --accent-light: #1e1b4b;
+  --accent-subtle: #3730a3;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.35);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.25);
+}
+
+/* === 工具类 === */
+.hidden { display: none !important; }
+
+/* === 全局重置 === */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color var(--transition), color var(--transition);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* === 顶部导航栏 === */
+.topbar {
+  background: var(--bg-topbar);
+  color: var(--text-on-dark);
+  padding: 0 20px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.topbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.topbar-logo img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* === 主题切换按钮 === */
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #e2e8f0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+}
+
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover svg {
+  transform: rotate(30deg);
+}
+
+/* === 历史按钮 === */
+.history-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(255,255,255,0.06);
+  color: #e2e8f0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  position: relative;
+}
+
+.history-btn:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.history-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* === 主内容区 === */
+.main-content {
+  padding: 20px 16px 120px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* === 进度条 === */
+.progress-bar-container {
+  margin-bottom: 24px;
+}
+
+.progress-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  position: relative;
+}
+
+.progress-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.progress-step-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  border: 2px solid var(--border-color);
+  background: var(--bg-card);
+  color: var(--text-tertiary);
+  transition: all var(--transition);
+  margin-bottom: 6px;
+}
+
+.progress-step.active .progress-step-dot {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 0 0 4px var(--accent-light);
+}
+
+.progress-step.completed .progress-step-dot {
+  border-color: var(--success);
+  background: var(--success);
+  color: #fff;
+}
+
+.progress-step-label {
+  font-size: 11px;
+  color: var(--text-tertiary);
+  text-align: center;
+  line-height: 1.3;
+  transition: color var(--transition);
+}
+
+.progress-step.active .progress-step-label {
+  color: var(--text-accent);
+  font-weight: 600;
+}
+
+.progress-step.completed .progress-step-label {
+  color: var(--success);
+}
+
+/* 连接线 */
+.progress-line {
+  position: absolute;
+  top: 14px;
+  left: 14%;
+  right: 14%;
+  height: 2px;
+  background: var(--border-color);
+  z-index: 0;
+}
+
+.progress-line-fill {
+  height: 100%;
+  background: var(--success);
+  transition: width 0.4s ease;
+  border-radius: 1px;
+}
+
+/* 手机端简化进度条 */
+.progress-mobile {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.progress-mobile-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.progress-mobile-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--border-color);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-mobile-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* === 卡片 === */
+.card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--border-color);
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+/* === 搜索框 === */
+.search-box {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.search-box input {
+  width: 100%;
+  height: 42px;
+  padding: 0 16px 0 40px;
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-md);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+}
+
+.search-box input:focus {
+  border-color: var(--border-focus);
+  background: var(--bg-input-focus);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.search-box input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.search-box-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  display: flex;
+}
+
+.search-box-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* === 网格选择（城市/行业） === */
+.grid-select {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.grid-select::-webkit-scrollbar {
+  width: 4px;
+}
+
+.grid-select::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.grid-select::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 2px;
+}
+
+.grid-item {
+  padding: 10px 8px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  cursor: pointer;
+  font-size: 13px;
+  color: var(--text-primary);
+  background: var(--bg-card);
+  transition: all var(--transition);
+  user-select: none;
+  line-height: 1.4;
+}
+
+.grid-item:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.grid-item.selected {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(79,70,229,0.25);
+}
+
+/* 行业分组标题 */
+.group-title {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 8px 4px 4px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: default;
+}
+
+.group-title:hover {
+  background: none;
+  border-color: transparent;
+}
+
+/* === 表单元素 === */
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+
+.form-label .required {
+  color: var(--danger);
+  margin-left: 2px;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  font-size: 14px;
+  outline: none;
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  border-color: var(--border-focus);
+  background: var(--bg-input-focus);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+.form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 36px;
+}
+
+.form-error {
+  font-size: 12px;
+  color: var(--danger);
+  margin-top: 4px;
+  display: none;
+}
+
+.form-error.visible {
+  display: block;
+}
+
+/* === 多选标签 === */
+.tag-select {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag-item {
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all var(--transition);
+  color: var(--text-primary);
+  background: var(--bg-card);
+  user-select: none;
+}
+
+.tag-item:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.tag-item.selected {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* === 单选卡片 === */
+.radio-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.radio-card {
+  padding: 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition);
+  text-align: center;
+  background: var(--bg-card);
+}
+
+.radio-card:hover {
+  border-color: var(--accent-subtle);
+  background: var(--accent-light);
+}
+
+.radio-card.selected {
+  border-color: var(--accent);
+  background: var(--accent-light);
+  box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+.radio-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.radio-card.selected .radio-card-title {
+  color: var(--text-accent);
+}
+
+.radio-card-desc {
+  font-size: 11px;
+  color: var(--text-secondary);
+  line-height: 1.3;
+}
+
+/* === 文件上传 === */
+.upload-zone {
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: var(--bg-input);
+}
+
+.upload-zone:hover,
+.upload-zone.dragover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.upload-zone-icon {
+  color: var(--text-tertiary);
+  margin-bottom: 8px;
+}
+
+.upload-zone-icon svg {
+  width: 36px;
+  height: 36px;
+}
+
+.upload-zone-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.upload-zone-hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+}
+
+.uploaded-files {
+  margin-top: 12px;
+}
+
+.uploaded-file {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--bg-input);
+  border-radius: var(--radius-sm);
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.uploaded-file-name {
+  flex: 1;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.uploaded-file-remove {
+  cursor: pointer;
+  color: var(--text-tertiary);
+  transition: color var(--transition);
+  display: flex;
+  align-items: center;
+}
+
+.uploaded-file-remove:hover {
+  color: var(--danger);
+}
+
+/* === 按钮 === */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 11px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: none;
+  font-family: var(--font-sans);
+  white-space: nowrap;
+}
+
+.btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-secondary {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--text-tertiary);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 8px 12px;
+}
+
+.btn-ghost:hover {
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background: transparent;
+  color: var(--danger);
+  padding: 8px 12px;
+}
+
+.btn-danger:hover {
+  background: rgba(239,68,68,0.08);
+}
+
+.btn-generate {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--accent), #7c3aed);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(79,70,229,0.3);
+}
+
+.btn-generate:hover {
+  box-shadow: 0 6px 20px rgba(79,70,229,0.4);
+  transform: translateY(-1px);
+}
+
+.btn-generate:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* === 底部操作栏 === */
+.bottom-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.bottom-actions .btn {
+  flex: 1;
+}
+
+/* === 生成结果区域 === */
+.result-container {
+  margin-top: 8px;
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.result-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.result-body {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  min-height: 200px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.result-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.result-body::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 2px;
+}
+
+/* 生成中动画 */
+.generating-cursor::after {
+  content: '▌';
+  animation: blink 0.8s infinite;
+  color: var(--accent);
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* 微调输入 */
+.refine-box {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.refine-box input {
+  flex: 1;
+}
+
+/* === 底部 Tab 栏 === */
+.tab-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--bg-tab-bar);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+  transition: background-color var(--transition), border-color var(--transition);
+}
+
+.tab-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0 8px;
+  cursor: pointer;
+  transition: all var(--transition);
+  border: none;
+  background: transparent;
+  color: var(--text-tab-inactive);
+  font-family: var(--font-sans);
+  gap: 3px;
+  position: relative;
+}
+
+.tab-item:hover {
+  color: var(--text-accent);
+}
+
+.tab-item.active {
+  color: var(--text-tab-active);
+  background: var(--bg-tab-active);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  margin: 0 8px;
+  padding-top: 8px;
+}
+
+.tab-item svg {
+  width: 22px;
+  height: 22px;
+}
+
+.tab-item-label {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tab-item-sub {
+  font-size: 10px;
+  opacity: 0.7;
+}
+
+/* === 历史弹窗 === */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg-modal-overlay);
+  z-index: 200;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal-panel {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%;
+  max-width: 720px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.modal-header h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.modal-body {
+  padding: 16px 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 2px;
+}
+
+.history-item {
+  padding: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.history-item:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.history-item-tab {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--accent-light);
+  color: var(--text-accent);
+}
+
+.history-item-time {
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.history-item-summary {
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+}
+
+.history-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-tertiary);
+  font-size: 14px;
+}
+
+/* === Loading 骨架屏 === */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-input) 25%, var(--border-color) 50%, var(--bg-input) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-line {
+  height: 14px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.skeleton-line:last-child {
+  width: 60%;
+}
+
+/* === Toast 通知 === */
+.toast {
+  position: fixed;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-20px);
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+  font-weight: 500;
+  z-index: 300;
+  opacity: 0;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-lg);
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-success {
+  background: var(--success);
+  color: #fff;
+}
+
+.toast-error {
+  background: var(--danger);
+  color: #fff;
+}
+
+.toast-info {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* === 步骤过渡动画 === */
+.step-content {
+  animation: stepIn 0.25s ease;
+}
+
+@keyframes stepIn {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* === 桌面端 Tab 升级为顶部 === */
+.desktop-tabs {
+  display: none;
+}
+
+/* === 响应式 === */
+
+/* 平板及以上 */
+@media (min-width: 640px) {
+  .grid-select {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .radio-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .main-content {
+    padding: 28px 24px 120px;
+  }
+
+  .card {
+    padding: 28px;
+  }
+}
+
+/* 桌面端 */
+@media (min-width: 1024px) {
+  .grid-select {
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .radio-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .main-content {
+    padding: 32px 32px 32px;
+    padding-bottom: 32px;
+    margin-top: 0;
+  }
+
+  /* 桌面端隐藏底部Tab，使用顶部Tab */
+  .tab-bar {
+    display: none;
+  }
+
+  .desktop-tabs {
+    display: flex;
+    gap: 4px;
+  }
+
+  .desktop-tab {
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-family: var(--font-sans);
+  }
+
+  .desktop-tab:hover {
+    border-color: var(--accent);
+    color: var(--text-accent);
+  }
+
+  .desktop-tab.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  /* 弹窗从底部改为居中 */
+  .modal-overlay {
+    align-items: center;
+  }
+
+  .modal-panel {
+    border-radius: var(--radius-xl);
+    max-height: 70vh;
+  }
+}
+
+/* 手机端 */
+@media (max-width: 639px) {
+  .topbar-logo span {
+    font-size: 14px;
+  }
+
+  /* 隐藏桌面端进度条，显示简化版 */
+  .progress-steps-wrapper {
+    display: none;
+  }
+
+  .progress-mobile {
+    display: flex;
+  }
+
+  .grid-select {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .grid-item {
+    padding: 9px 6px;
+    font-size: 12px;
+  }
+
+  .radio-cards {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .radio-card {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 18px;
+    border-radius: var(--radius-md);
+  }
+
+  .card-title {
+    font-size: 16px;
+  }
+
+  .main-content {
+    padding: 14px 12px 110px;
+  }
+
+  .bottom-actions {
+    margin-top: 18px;
+  }
+
+  .btn {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .btn-generate {
+    padding: 13px;
+    font-size: 15px;
+  }
+
+  /* 手机端表单行并排 */
+  .form-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .form-row .form-group {
+    flex: 1;
+  }
+
+  .upload-zone {
+    padding: 24px 16px;
+  }
+}
+
+/* === 打印隐藏 === */
+@media print {
+  .topbar, .tab-bar, .bottom-actions, .result-actions {
+    display: none !important;
+  }
+
+  .main-content {
+    padding: 0;
+    max-width: 100%;
+  }
+}
+</style>
+</head>
+<body x-data="createApp()" :class="{ dark: theme === 'dark' }">
+  <header class="topbar">
+    <div class="topbar-logo">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSI+CiAgPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iMTAiIGZpbGw9IiM0ZjQ2ZTUiLz4KICA8cGF0aCBkPSJNMTIgMTRsNC00IDQgNE0xNiAxMHYxMk0yNCAyNmwtNCA0LTQtNE0yMCAzMFYxOCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIuMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CiAgPGNpcmNsZSBjeD0iMzAiIGN5PSIxMiIgcj0iNCIgc3Ryb2tlPSIjZmZmIiBzdHJva2Utd2lkdGg9IjEuOCIgZmlsbD0ibm9uZSIvPgogIDxwYXRoIGQ9Ik0yOC41IDEyaDNNMzAgMTAuNXYzIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KPC9zdmc+" alt="Logo">
+      <span x-text="activeTab === 'huixiao' ? '爆款视频脚本工作台' : '爆款视频脚本工作台'">爆款视频脚本工作台</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="desktop-tabs">
+        <button class="desktop-tab" :class="{ active: activeTab === 'huixiao' }" @click="switchTab('huixiao')">会销脚本</button>
+        <button class="desktop-tab" :class="{ active: activeTab === 'baokuan' }" @click="switchTab('baokuan')">爆款视频</button>
+      </div>
+      <button class="theme-toggle" @click="toggleTheme()" :title="theme === 'light' ? '切换深色模式' : '切换浅色模式'">
+        <svg x-show="theme === 'light'" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg x-show="theme === 'dark'" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <button class="history-btn" @click="toggleHistory()" title="历史记录">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </button>
+    </div>
+  </header>
+  <main class="main-content" x-show="!showHistory">
+    <div class="progress-bar-container progress-steps-wrapper" x-show="!showResult">
+      <div class="progress-steps">
+        <div class="progress-line"><div class="progress-line-fill" :style="'width:' + stepProgress() + '%'"></div></div>
+        <template x-for="s in totalSteps" :key="s">
+          <div class="progress-step" :class="{ active: currentStep === s, completed: currentStep > s }">
+            <div class="progress-step-dot" x-text="currentStep > s ? '✓' : s"></div>
+            <div class="progress-step-label" x-text="stepLabel(s)"></div>
+          </div>
+        </template>
+      </div>
+    </div>
+    <div class="progress-mobile" x-show="!showResult">
+      <span class="progress-mobile-text" x-text="'步骤 ' + currentStep + '/' + totalSteps"></span>
+      <div class="progress-mobile-bar"><div class="progress-mobile-fill" :style="'width:' + stepProgress() + '%'"></div></div>
+      <span class="progress-mobile-text" x-text="stepLabel(currentStep)"></span>
+    </div>
+    <template x-if="activeTab === 'huixiao' && !showResult">
+      <div class="step-content">
+        <template x-if="currentStep === 1">
+          <div class="card">
+            <h2 class="card-title">投放平台与视频时长</h2>
+            <p class="card-desc">选择投放的平台和期望的视频时长</p>
+            <div class="form-group">
+              <label class="form-label">投放平台<span class="required">*</span></label>
+              <div class="tag-select">
+                <template x-for="p in HUIXIAO_PLATFORMS" :key="p.value">
+                  <div class="tag-item" :class="{ selected: huixiao.platforms.includes(p.value) }" @click="togglePlatform(p.value)" x-text="p.label"></div>
+                </template>
+              </div>
+            </div>
+            <div class="form-group" style="margin-top:20px">
+              <label class="form-label">视频时长<span class="required">*</span></label>
+              <div class="radio-cards">
+                <template x-for="d in DURATION_OPTIONS" :key="d.value">
+                  <div class="radio-card" :class="{ selected: formData.duration === d.value }" @click="formData.duration = d.value">
+                    <div class="radio-card-title" x-text="d.label"></div>
+                    <div class="radio-card-desc" x-text="d.desc"></div>
+                  </div>
+                </template>
+              </div>
+            </div>
+            <div class="bottom-actions">
+              <button class="btn btn-primary" :disabled="!canProceed()" @click="nextStep()">下一步<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+          </div>
+        </template>
+        <template x-if="currentStep === 2">
+          <div class="card">
+            <h2 class="card-title">选择产品行业</h2>
+            <p class="card-desc">选择您的产品所属行业，AI 将根据行业特点定制脚本内容</p>
+            <div class="search-box">
+              <span class="search-box-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+              <input type="text" x-model="industrySearch" placeholder="搜索行业..." @input="industrySearch = $event.target.value">
+            </div>
+            <div class="grid-select">
+              <template x-for="group in filteredIndustries()" :key="group.category">
+                <div style="display:contents">
+                  <div class="group-title" x-text="group.category"></div>
+                  <template x-for="item in group.items" :key="item">
+                    <div class="grid-item" :class="{ selected: formData.industry === item }" @click="selectIndustry(item)" x-text="item"></div>
+                  </template>
+                </div>
+              </template>
+            </div>
+            <div class="bottom-actions" style="margin-top:16px">
+              <button class="btn btn-secondary" @click="prevStep()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>上一步
+              </button>
+            </div>
+          </div>
+        </template>
+        <template x-if="currentStep === 3">
+          <div class="card">
+            <h2 class="card-title">选择城市</h2>
+            <p class="card-desc">选择您所在或目标投放的城市，让脚本更具地域针对性</p>
+            <div class="search-box">
+              <span class="search-box-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+              <input type="text" x-model="citySearch" placeholder="搜索城市或省份..." @input="citySearch = $event.target.value">
+            </div>
+            <div class="grid-select">
+              <template x-for="group in filteredCities()" :key="group.province">
+                <div style="display:contents">
+                  <div class="group-title" x-text="group.province"></div>
+                  <template x-for="city in group.cities" :key="city">
+                    <div class="grid-item" :class="{ selected: formData.city === city }" @click="selectCity(city)" x-text="city"></div>
+                  </template>
+                </div>
+              </template>
+            </div>
+            <div class="bottom-actions" style="margin-top:16px">
+              <button class="btn btn-secondary" @click="prevStep()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>上一步
+              </button>
+            </div>
+          </div>
+        </template>
+        <template x-if="currentStep === 4">
+          <div class="card">
+            <h2 class="card-title">填写具体要求</h2>
+            <p class="card-desc">提供更多细节，让 AI 生成更精准的脚本</p>
+            <div class="form-group">
+              <label class="form-label">产品卖点</label>
+              <textarea class="form-textarea" x-model="huixiao.sellingPoints" placeholder="列举 2-3 个核心卖点，如：支持OEM/ODM、年产能500万件、通过ISO9001认证..." rows="3"></textarea>
+              <p class="form-hint">可选，留空则由 AI 根据行业自动补充</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label">目标客户</label>
+              <select class="form-select" x-model="huixiao.targetCustomer">
+                <option value="">请选择目标客户类型</option>
+                <template x-for="t in HUIXIAO_TARGETS" :key="t.value">
+                  <option :value="t.value" x-text="t.label"></option>
+                </template>
+              </select>
+            </div>
+            <div class="form-group" x-show="huixiao.targetCustomer === 'custom'">
+              <label class="form-label">自定义目标客户</label>
+              <input class="form-input" type="text" x-model="huixiao.targetCustomerCustom" placeholder="请描述您的目标客户群体...">
+            </div>
+            <div class="form-group">
+              <label class="form-label">脚本风格<span class="required">*</span></label>
+              <div class="radio-cards">
+                <template x-for="s in HUIXIAO_STYLES" :key="s.value">
+                  <div class="radio-card" :class="{ selected: huixiao.style === s.value }" @click="selectStyle(s.value)">
+                    <div class="radio-card-title" x-text="s.label"></div>
+                    <div class="radio-card-desc" x-text="s.desc"></div>
+                  </div>
+                </template>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">补充说明</label>
+              <textarea class="form-textarea" x-model="huixiao.extraNotes" placeholder="其他需要 AI 注意的要求..." rows="2"></textarea>
+            </div>
+            <div class="bottom-actions">
+              <button class="btn btn-secondary" @click="prevStep()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>上一步
+              </button>
+              <button class="btn btn-primary" :disabled="!canProceed()" @click="nextStep()">下一步<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+          </div>
+        </template>
+        <template x-if="currentStep === 5">
+          <div class="card">
+            <h2 class="card-title">上传参考文件并生成</h2>
+            <p class="card-desc">可选上传参考文件，AI 将参考文件内容生成脚本</p>
+            <div class="upload-zone" @click="$refs.fileInput.click()" @dragover.prevent="$el.classList.add('dragover')" @dragleave="$el.classList.remove('dragover')" @drop.prevent="handleFileDrop($event)">
+              <div class="upload-zone-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <div class="upload-zone-text">点击或拖拽文件到此处上传</div>
+              <div class="upload-zone-hint">支持 PDF、DOCX、TXT，单个文件不超过 5MB</div>
+              <input type="file" x-ref="fileInput" accept=".pdf,.docx,.doc,.txt,.png,.jpg,.jpeg,.webp" multiple @change="handleFileSelect($event)" style="display:none">
+            </div>
+            <div class="uploaded-files">
+              <template x-for="file in formData.files" :key="file.id">
+                <div class="uploaded-file">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-tertiary);flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <span class="uploaded-file-name" x-text="file.name"></span>
+                  <span style="color:var(--text-tertiary);font-size:12px;flex-shrink:0" x-text="Utils.formatFileSize(file.size)"></span>
+                  <span class="uploaded-file-remove" @click.stop="removeFile(file.id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </span>
+                </div>
+              </template>
+            </div>
+            <div style="margin-top:24px">
+              <button class="btn btn-generate" :disabled="isGenerating" @click="generate()">
+                <template x-if="!isGenerating">
+                  <span>开始生成脚本</span>
+                </template>
+                <template x-if="isGenerating">
+                  <span>
+                    <svg style="animation:spin 1s linear infinite;width:18px;height:18px" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                    AI 正在生成中...
+                  </span>
+                </template>
+              </button>
+            </div>
+            <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+            <div class="bottom-actions">
+              <button class="btn btn-secondary" @click="prevStep()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>上一步
+              </button>
+            </div>
+          </div>
+        </template>
+
+      </div>
+    </template>
+    <template x-if="activeTab === 'baokuan' && !showResult">
+      <div class="step-content">
+        <template x-if="currentStep === 1">
+          <div class="card">
+            <h2 class="card-title">视频类型与时长</h2>
+            <p class="card-desc">选择您想要制作的视频类型和期望时长</p>
+            <div class="form-group">
+              <label class="form-label">视频类型<span class="required">*</span></label>
+              <div class="radio-cards" style="grid-template-columns:repeat(2,1fr)">
+                <template x-for="t in BAOKUAN_TYPES" :key="t.value">
+                  <div class="radio-card" :class="{ selected: baokuan.videoType === t.value }" @click="selectVideoType(t.value)">
+                    <div class="radio-card-title" x-text="t.label"></div>
+                    <div class="radio-card-desc" x-text="t.desc"></div>
+                  </div>
+                </template>
+              </div>
+            </div>
+            <div class="form-group" style="margin-top:20px">
+              <label class="form-label">视频时长<span class="required">*</span></label>
+              <div class="radio-cards">
+                <template x-for="d in DURATION_OPTIONS" :key="d.value">
+                  <div class="radio-card" :class="{ selected: formData.duration === d.value }" @click="formData.duration = d.value">
+                    <div class="radio-card-title" x-text="d.label"></div>
+                    <div class="radio-card-desc" x-text="d.desc"></div>
+                  </div>
+                </template>
+              </div>
+            </div>
+            <div class="bottom-actions">
+              <button class="btn btn-primary" :disabled="!canProceed()" @click="nextStep()">下一步<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+          </div>
+        </template>
+        <template x-if="currentStep === 2">
+          <div class="card">
+            <h2 class="card-title">选择产品行业</h2>
+            <p class="card-desc">选择您的产品所属行业，AI 将分析该行业的爆款视频特征</p>
+            <div class="search-box">
+              <span class="search-box-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+              <input type="text" x-model="industrySearch" placeholder="搜索行业..." @input="industrySearch = $event.target.value">
+            </div>
+            <div class="grid-select">
+              <template x-for="group in filteredIndustries()" :key="group.category">
+                <div style="display:contents">
+                  <div class="group-title" x-text="group.category"></div>
+                  <template x-for="item in group.items" :key="item">
+                    <div class="grid-item" :class="{ selected: formData.industry === item }" @click="selectIndustry(item)" x-text="item"></div>
+                  </template>
+                </div>
+              </template>
+            </div>
+            <div class="bottom-actions" style="margin-top:16px">
+              <button class="btn btn-secondary" @click="prevStep()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>上一步
+              </button>
+            </div>
+          </div>
+        </template>
+        <template x-if="currentStep === 3">
+          <div class="card">
+            <h2 class="card-title">选择城市</h2>
+            <p class="card-desc">选择您所在的城市，让脚本更贴合本地产业特色</p>
+            <div class="search-box">
+              <span class="search-box-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
+              <input type="text" x-model="citySearch" placeholder="搜索城市或省份..." @input="citySearch = $event.target.value">
+            </div>
+            <div class="grid-select">
+              <template x-for="group in filteredCities()" :key="group.province">
+                <div style="display:contents">
+                  <div class="group-title" x-text="group.province"></div>
+                  <template x-for="city in group.cities" :key="city">
+                    <div class="grid-item" :class="{ selected: formData.city === city }" @click="selectCity(city)" x-text="city"></div>
+                  </template>
+                </div>
+              </template>
+            </div>
+            <div class="bottom-actions" style="margin-top:16px">
+              <button class="btn btn-secondary" @click="prevStep()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>上一步
+              </button>
+            </div>
+          </div>
+        </template>
+        <template x-if="currentStep === 4">
+          <div class="card">
+            <h2 class="card-title">填写具体要求</h2>
+            <p class="card-desc">提供更多信息，让 AI 生成更贴合需求的脚本</p>
+            <div class="form-group">
+              <label class="form-label">视频目标<span class="required">*</span></label>
+              <div class="tag-select">
+                <template x-for="g in BAOKUAN_GOALS" :key="g.value">
+                  <div class="tag-item" :class="{ selected: baokuan.videoGoal === g.value }" @click="selectVideoGoal(g.value)" x-text="g.label"></div>
+                </template>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">内容偏好</label>
+              <div class="tag-select">
+                <template x-for="p in BAOKUAN_PREFERENCES" :key="p.value">
+                  <div class="tag-item" :class="{ selected: baokuan.contentPreference.includes(p.value) }" @click="togglePreference(p.value)" x-text="p.label"></div>
+                </template>
+              </div>
+              <p class="form-hint">可多选，留空则 AI 自动选择</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label">目标市场</label>
+              <select class="form-select" x-model="baokuan.targetMarket">
+                <option value="">请选择目标市场区域</option>
+                <template x-for="m in BAOKUAN_MARKETS" :key="m.value">
+                  <option :value="m.value" x-text="m.label"></option>
+                </template>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">补充说明</label>
+              <textarea class="form-textarea" x-model="baokuan.extraNotes" placeholder="其他需要 AI 注意的要求..." rows="2"></textarea>
+            </div>
+            <div class="bottom-actions">
+              <button class="btn btn-secondary" @click="prevStep()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>上一步
+              </button>
+              <button class="btn btn-primary" :disabled="!canProceed()" @click="nextStep()">下一步<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+          </div>
+        </template>
+        <template x-if="currentStep === 5">
+          <div class="card">
+            <h2 class="card-title">上传参考文件并生成</h2>
+            <p class="card-desc">可选上传参考文件，如竞品脚本、产品资料等</p>
+            <div class="upload-zone" @click="$refs.fileInput.click()" @dragover.prevent="$el.classList.add('dragover')" @dragleave="$el.classList.remove('dragover')" @drop.prevent="handleFileDrop($event)">
+              <div class="upload-zone-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+              </div>
+              <div class="upload-zone-text">点击或拖拽文件到此处上传</div>
+              <div class="upload-zone-hint">支持 PDF、DOCX、TXT，单个文件不超过 5MB</div>
+              <input type="file" x-ref="fileInput" accept=".pdf,.docx,.doc,.txt,.png,.jpg,.jpeg,.webp" multiple @change="handleFileSelect($event)" style="display:none">
+            </div>
+            <div class="uploaded-files">
+              <template x-for="file in formData.files" :key="file.id">
+                <div class="uploaded-file">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--text-tertiary);flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  <span class="uploaded-file-name" x-text="file.name"></span>
+                  <span style="color:var(--text-tertiary);font-size:12px;flex-shrink:0" x-text="Utils.formatFileSize(file.size)"></span>
+                  <span class="uploaded-file-remove" @click.stop="removeFile(file.id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </span>
+                </div>
+              </template>
+            </div>
+            <div style="margin-top:24px">
+              <button class="btn btn-generate" :disabled="isGenerating" @click="generate()">
+                <template x-if="!isGenerating">
+                  <span>开始生成脚本</span>
+                </template>
+                <template x-if="isGenerating">
+                  <span>
+                    <svg style="animation:spin 1s linear infinite;width:18px;height:18px" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg>
+                    AI 正在生成中...
+                  </span>
+                </template>
+              </button>
+            </div>
+            <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+            <div class="bottom-actions">
+              <button class="btn btn-secondary" @click="prevStep()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>上一步
+              </button>
+            </div>
+          </div>
+        </template>
+
+      </div>
+    </template>
+    <template x-if="showResult">
+      <div class="step-content">
+        <div class="card">
+          <div class="result-header">
+            <div>
+              <h2 class="card-title" x-text="activeTab === 'huixiao' ? '会销广告脚本' : '爆款视频脚本'"></h2>
+              <p class="card-desc" style="margin-bottom:0" x-text="formData.city + ' · ' + formData.industry + ' · ' + (formData.duration || '') + '秒'"></p>
+            </div>
+            <div class="result-actions">
+              <button class="btn btn-ghost" @click="backToEdit()" title="返回编辑">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <button class="btn btn-ghost" @click="copyResult()" title="复制">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              </button>
+              <button class="btn btn-ghost" @click="exportResult()" title="导出">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </button>
+              <button class="btn btn-ghost" @click="regenerate()" title="重新生成" :disabled="isGenerating">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="result-container">
+            <div class="result-body" id="result-body" :class="{ 'generating-cursor': isGenerating && !generatingText }" x-text="generatingText || (isGenerating ? '' : '等待生成...')"></div>
+          </div>
+          <template x-if="result && !isGenerating">
+            <div class="refine-box">
+              <input class="form-input" type="text" x-model="refineInput" placeholder="输入微调要求，如：语气更活泼一些、增加数据佐证..." @keydown.enter="refine()">
+              <button class="btn btn-primary" :disabled="!refineInput.trim() || isRefining" @click="refine()">
+                <template x-if="!isRefining"><span>微调</span></template>
+                <template x-if="isRefining"><span>调整中...</span></template>
+              </button>
+            </div>
+          </template>
+        </div>
+      </div>
+    </template>
+
+  </main>
+  <template x-if="showHistory">
+    <div class="modal-overlay" @click.self="closeHistory()">
+      <div class="modal-panel">
+        <div class="modal-header">
+          <h3>历史记录</h3>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn btn-ghost" style="font-size:12px;color:var(--danger)" @click="clearAllHistory()" x-show="history.length > 0">清空全部</button>
+            <button class="btn btn-ghost" @click="closeHistory()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="modal-body">
+          <template x-if="history.length === 0">
+            <div class="history-empty">暂无历史记录</div>
+          </template>
+          <template x-for="item in history" :key="item.id">
+            <div class="history-item" @click="loadHistory(item)">
+              <div class="history-item-header">
+                <span class="history-item-tab" x-text="item.tab === 'huixiao' ? '会销' : '爆款视频'"></span>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span class="history-item-time" x-text="item.time"></span>
+                  <span class="uploaded-file-remove" @click.stop="deleteHistory(item.id)" style="flex-shrink:0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </span>
+                </div>
+              </div>
+              <div class="history-item-summary" x-text="item.summary"></div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  </template>
+  <nav class="tab-bar">
+    <button class="tab-item" :class="{ active: activeTab === 'huixiao' }" @click="switchTab('huixiao')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+      <span class="tab-item-label">会销</span>
+      <span class="tab-item-sub">投放线索脚本</span>
+    </button>
+    <button class="tab-item" :class="{ active: activeTab === 'baokuan' }" @click="switchTab('baokuan')">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+      <span class="tab-item-label">爆款视频</span>
+      <span class="tab-item-sub">外贸爆款脚本</span>
+    </button>
+  </nav>
+  <script>
+/**
+ * 通用工具函数
+ */
+
+const Utils = {
+  /**
+   * 显示 toast 通知
+   */
+  showToast(message, type = 'info', duration = 2500) {
+    // 移除已有 toast
+    document.querySelectorAll('.toast').forEach(el => el.remove());
+
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => toast.classList.add('show'));
+    });
+
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 300);
+    }, duration);
+  },
+
+  /**
+   * 复制文本到剪贴板
+   */
+  async copyToClipboard(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // fallback
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;left:-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      return ok;
+    }
+  },
+
+  /**
+   * 导出为 TXT 文件
+   */
+  exportTxt(content, filename) {
+    const BOM = '\uFEFF';
+    const blob = new Blob([BOM + content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || '视频脚本.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  },
+
+  /**
+   * 格式化时间
+   */
+  formatTime(date) {
+    const d = date || new Date();
+    const pad = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  },
+
+  /**
+   * 生成唯一ID
+   */
+  uid() {
+    return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  },
+
+  /**
+   * 截断文本
+   */
+  truncate(text, maxLen = 100) {
+    if (!text || text.length <= maxLen) return text || '';
+    return text.slice(0, maxLen) + '...';
+  },
+
+  /**
+   * 防抖
+   */
+  debounce(fn, delay = 300) {
+    let timer;
+    return function (...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+  },
+
+  /**
+   * 获取文件扩展名
+   */
+  getFileExt(name) {
+    return name.split('.').pop().toLowerCase();
+  },
+
+  /**
+   * 文件大小格式化
+   */
+  formatFileSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  },
+};
+</script>
+  <script>
+/**
+ * 文件解析模块 - 前端提取文件文本内容
+ */
+
+const FileParser = {
+  MAX_FILE_SIZE: 5 * 1024 * 1024, // 5MB
+  MAX_TEXT_LENGTH: 5000, // 提取文本最大字符数
+  SUPPORTED_EXTS: ['txt', 'pdf', 'docx', 'doc', 'png', 'jpg', 'jpeg', 'webp'],
+
+  /**
+   * 验证文件
+   */
+  validate(file) {
+    const ext = Utils.getFileExt(file.name);
+    if (!this.SUPPORTED_EXTS.includes(ext)) {
+      return { ok: false, msg: `不支持的文件格式 .${ext}，支持：${this.SUPPORTED_EXTS.join('、')}` };
+    }
+    if (file.size > this.MAX_FILE_SIZE) {
+      return { ok: false, msg: `文件过大（${Utils.formatFileSize(file.size)}），最大支持 5MB` };
+    }
+    return { ok: true };
+  },
+
+  /**
+   * 解析文件，返回提取的文本
+   */
+  async parse(file) {
+    const ext = Utils.getFileExt(file.name);
+
+    try {
+      let text = '';
+
+      if (ext === 'txt') {
+        text = await this._parseTxt(file);
+      } else if (ext === 'pdf') {
+        text = await this._parsePdf(file);
+      } else if (ext === 'docx' || ext === 'doc') {
+        text = await this._parseDocx(file);
+      } else if (['png', 'jpg', 'jpeg', 'webp'].includes(ext)) {
+        text = `[图片参考: ${file.name}]（图片内容将作为参考上下文）`;
+      }
+
+      // 截断过长文本
+      if (text.length > this.MAX_TEXT_LENGTH) {
+        text = text.slice(0, this.MAX_TEXT_LENGTH) + '\n\n（文件内容已截断）';
+      }
+
+      return { ok: true, text };
+    } catch (e) {
+      console.error('文件解析失败:', e);
+      return { ok: false, msg: `文件解析失败: ${e.message}` };
+    }
+  },
+
+  /**
+   * 解析 TXT
+   */
+  async _parseTxt(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(new Error('TXT 文件读取失败'));
+      reader.readAsText(file, 'UTF-8');
+    });
+  },
+
+  /**
+   * 解析 PDF（使用 pdf.js）
+   */
+  async _parsePdf(file) {
+    if (!window.pdfjsLib) {
+      console.warn('pdf.js 未加载，尝试动态加载');
+      await this._loadPdfJs();
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const texts = [];
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const pageText = content.items.map(item => item.str).join(' ');
+      texts.push(pageText);
+    }
+
+    return texts.join('\n\n');
+  },
+
+  /**
+   * 动态加载 pdf.js
+   */
+  async _loadPdfJs() {
+    return new Promise((resolve, reject) => {
+      if (window.pdfjsLib) { resolve(); return; }
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
+      script.type = 'module';
+      script.onload = () => {
+        if (window.pdfjsLib) {
+          pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+          resolve();
+        } else {
+          reject(new Error('pdf.js 加载失败'));
+        }
+      };
+      script.onerror = () => reject(new Error('pdf.js 加载失败'));
+      document.head.appendChild(script);
+    });
+  },
+
+  /**
+   * 解析 DOCX（使用 mammoth.js）
+   */
+  async _parseDocx(file) {
+    if (!window.mammoth) {
+      await this._loadMammoth();
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const result = await mammoth.extractRawText({ arrayBuffer });
+    return result.value;
+  },
+
+  /**
+   * 动态加载 mammoth.js
+   */
+  async _loadMammoth() {
+    return new Promise((resolve, reject) => {
+      if (window.mammoth) { resolve(); return; }
+      const script = document.createElement('script');
+      script.src = 'https://unpkg.com/mammoth@1.8.0/mammoth.browser.min.js';
+      script.onload = () => {
+        if (window.mammoth) resolve();
+        else reject(new Error('mammoth.js 加载失败'));
+      };
+      script.onerror = () => reject(new Error('mammoth.js 加载失败'));
+      document.head.appendChild(script);
+    });
+  },
+};
+</script>
+  <script>
+/**
+ * 爆款视频脚本生成工作台 - 静态数据
+ */
+
+const CITY_DATA = [
+  { province: '广东', cities: ['深圳', '广州', '东莞', '佛山', '中山', '珠海', '惠州', '汕头'] },
+  { province: '浙江', cities: ['宁波', '杭州', '温州', '义乌', '绍兴', '台州', '嘉兴', '金华'] },
+  { province: '江苏', cities: ['苏州', '无锡', '南京', '常州', '南通', '扬州', '徐州'] },
+  { province: '山东', cities: ['青岛', '烟台', '威海', '潍坊', '济南', '临沂', '淄博'] },
+  { province: '福建', cities: ['厦门', '福州', '泉州', '漳州', '莆田'] },
+  { province: '上海', cities: ['上海'] },
+  { province: '北京', cities: ['北京'] },
+  { province: '天津', cities: ['天津'] },
+  { province: '河北', cities: ['保定', '沧州', '石家庄', '廊坊'] },
+  { province: '安徽', cities: ['合肥', '芜湖', '马鞍山'] },
+  { province: '湖北', cities: ['武汉', '宜昌'] },
+  { province: '四川', cities: ['成都', '德阳'] },
+  { province: '重庆', cities: ['重庆'] },
+  { province: '河南', cities: ['郑州', '洛阳'] },
+  { province: '湖南', cities: ['长沙', '株洲'] },
+  { province: '江西', cities: ['南昌', '赣州'] },
+  { province: '辽宁', cities: ['大连', '沈阳'] },
+  { province: '吉林', cities: ['长春'] },
+  { province: '黑龙江', cities: ['哈尔滨'] },
+  { province: '陕西', cities: ['西安'] },
+];
+
+const INDUSTRY_DATA = [
+  {
+    category: '电子电器',
+    icon: 'smartphone',
+    items: ['手机配件', 'LED灯具', '消费电子', '安防设备', '家用电器', '充电设备']
+  },
+  {
+    category: '机械五金',
+    icon: 'wrench',
+    items: ['电动工具', '汽配零件', '阀门管件', '紧固件', '轴承', '模具']
+  },
+  {
+    category: '纺织服装',
+    icon: 'shirt',
+    items: ['服装', '家纺', '箱包', '鞋帽', '面料', '针织品']
+  },
+  {
+    category: '家居用品',
+    icon: 'home',
+    items: ['家具', '厨房用品', '卫浴', '户外用品', '收纳用品', '家居装饰']
+  },
+  {
+    category: '建材装饰',
+    icon: 'building',
+    items: ['瓷砖', '石材', '门窗', '涂料', '地板', '五金建材']
+  },
+  {
+    category: '美容个护',
+    icon: 'sparkles',
+    items: ['化妆品', '美甲用品', '假发', '美容仪器', '个人护理']
+  },
+  {
+    category: '玩具礼品',
+    icon: 'gift',
+    items: ['玩具', '工艺品', '节日用品', '促销礼品', '宠物用品']
+  },
+  {
+    category: '包装印刷',
+    icon: 'package',
+    items: ['包装盒', '包装袋', '标签', '纸制品', '印刷服务']
+  },
+  {
+    category: '医疗健康',
+    icon: 'heart-pulse',
+    items: ['医疗器械', '防护用品', '康复器材', '健康用品']
+  },
+  {
+    category: '汽车配件',
+    icon: 'car',
+    items: ['车灯', '轮胎', '内饰件', '汽车电子', '摩托车配件']
+  },
+  {
+    category: '运动户外',
+    icon: 'bike',
+    items: ['健身器材', '运动护具', '露营装备', '水上运动', '球类用品']
+  },
+  {
+    category: '食品农业',
+    icon: 'leaf',
+    items: ['茶叶', '零食', '调味品', '农产品', '食品加工设备']
+  },
+];
+
+const DURATION_OPTIONS = [
+  { value: '15', label: '15 秒', desc: '短视频广告' },
+  { value: '30', label: '30 秒', desc: '标准广告' },
+  { value: '60', label: '60 秒', desc: '深度内容' },
+  { value: '90', label: '90 秒', desc: '长内容' },
+];
+
+// 会销Tab - 投放平台
+const HUIXIAO_PLATFORMS = [
+  { value: 'douyin', label: '抖音' },
+  { value: 'shipinhao', label: '视频号' },
+  { value: 'xiaohongshu', label: '小红书' },
+];
+
+// 会销Tab - 目标客户
+const HUIXIAO_TARGETS = [
+  { value: 'purchaser', label: '海外采购商' },
+  { value: 'ecommerce', label: '跨境电商卖家' },
+  { value: 'contractor', label: '工程承包商' },
+  { value: 'agent', label: '品牌代理商' },
+  { value: 'wholesaler', label: '零售批发商' },
+  { value: 'custom', label: '自定义', custom: true },
+];
+
+// 会销Tab - 脚本风格
+const HUIXIAO_STYLES = [
+  { value: 'pain_point', label: '痛点切入型', desc: '直击客户痛点，引发共鸣' },
+  { value: 'factory', label: '工厂实拍型', desc: '真实工厂场景，建立信任' },
+  { value: 'compare', label: '对比评测型', desc: '竞品对比，凸显优势' },
+  { value: 'data', label: '数据佐证型', desc: '用数据说话，专业权威' },
+  { value: 'testimonial', label: '客户见证型', desc: '真实客户反馈，口碑传播' },
+];
+
+// 爆款视频Tab - 视频类型
+const BAOKUAN_TYPES = [
+  { value: 'factory_show', label: '工厂实拍展示', desc: '生产线全景展示' },
+  { value: 'product_review', label: '产品对比评测', desc: '多维度产品对比' },
+  { value: 'pain_solution', label: '痛点解决教程', desc: '发现问题解决问题' },
+  { value: 'knowledge', label: '行业知识科普', desc: '专业知识输出' },
+  { value: 'customer_case', label: '客户案例见证', desc: '真实案例展示' },
+  { value: 'china_vs_world', label: '中国制造对比', desc: '中外产品对比' },
+  { value: 'unboxing', label: '开箱使用场景', desc: '沉浸式开箱体验' },
+];
+
+// 爆款视频Tab - 视频目标
+const BAOKUAN_GOALS = [
+  { value: 'followers', label: '涨粉' },
+  { value: 'leads', label: '获客' },
+  { value: 'brand', label: '品牌曝光' },
+  { value: 'traffic', label: '引流到阿里店铺' },
+];
+
+// 爆款视频Tab - 内容偏好
+const BAOKUAN_PREFERENCES = [
+  { value: 'factory_strength', label: '工厂实力展示' },
+  { value: 'product_detail', label: '产品细节特写' },
+  { value: 'effect_compare', label: '使用效果对比' },
+  { value: 'customer_feedback', label: '客户反馈' },
+  { value: 'industry_data', label: '行业数据' },
+];
+
+// 爆款视频Tab - 目标市场
+const BAOKUAN_MARKETS = [
+  { value: 'southeast_asia', label: '东南亚' },
+  { value: 'middle_east', label: '中东' },
+  { value: 'europe_america', label: '欧美' },
+  { value: 'africa', label: '非洲' },
+  { value: 'south_america', label: '南美' },
+  { value: 'global', label: '全球' },
+];
+
+// AI 系统 Prompt
+const SYSTEM_PROMPTS = {
+  huixiao: `你是一位资深的跨境电商短视频脚本编剧，专门为阿里巴巴国际站的商家编写用于抖音/视频号/小红书投放的广告脚本。
+
+你的脚本遵循"获客型脚本"的四段式结构：
+1. 痛点钩子（前3-5秒）：直接命中目标客户的具体困扰，制造紧迫感
+2. 原因分析（10-15秒）：解释问题成因，建立专业权威感
+3. 解决方案（20-30秒）：展示产品/工厂实力作为解决方案，用具体数据和案例支撑
+4. 行动指令（最后5秒）：低门槛的互动引导，推动留资或咨询
+
+输出要求：
+- 严格按时间轴分段，每段标注精确时间节点
+- 每段必须包含：画面描述 | 旁白 | 字幕（三要素缺一不可）
+- 旁白要口语化、有节奏感，适合配音，注意停顿和重音
+- 画面描述要具体到可执行的操作（如"俯拍工厂流水线全景"而非"展示工厂"）
+- 适当加入音效和BGM建议
+- 最后附上：拍摄建议（场景、道具、注意事项）、投放建议（标签、发布时间、评论区引导）
+- 整体语气要专业、有力量感，符合B2B商务调性
+- 充分利用用户提供的城市和行业信息，让脚本具有地域和行业针对性`,
+
+  baokuan: `你是一位精通短视频算法的爆款内容策划师，擅长分析全网爆款视频的底层逻辑，并为外贸B2B企业定制高传播度视频脚本。
+
+你会运用以下爆款结构（根据用户选择的类型匹配最优结构）：
+- 工厂实拍型：生产线全景 → 细节特写 → 对比 → CTA
+- 痛点解决型：场景还原 → 放大痛点 → 产品介入 → 效果验证
+- 中国制造 vs 海外：海外痛点 → 中国方案 → 数据对比 → 合作引导
+- 行业科普型：反常识开头 → 知识输出 → 权威背书 → 关注引导
+- 客户案例型：客户背景 → 遇到问题 → 合作过程 → 成果展示
+- 开箱体验型：悬念开场 → 开箱过程 → 使用演示 → 总结推荐
+
+输出要求：
+- 严格按时间轴分段，每段包含画面描述/旁白/字幕
+- 每个段落标注"设计要点"，解释为什么这样写能触发算法推荐
+- 附带"爆款要素分析"，说明该结构容易爆的核心原因
+- 提供具体的拍摄执行清单（场景准备、道具清单、拍摄角度、后期剪辑建议）
+- 提供发布运营建议（推荐标题3个备选、热门标签组合、发布时间、互动引导策略）
+- 整体风格要符合平台调性，有网感但不low，专业但不死板
+- 充分利用用户提供的城市和行业信息，让脚本具有地域和行业针对性`
+};
+</script>
+  <script>
+/**
+ * API 调用模块 - 流式调用 AI 生成脚本
+ */
+
+const Api = {
+  /**
+   * 流式生成脚本
+   * @param {Object} params - 请求参数
+   * @param {string} params.mode - 'huixiao' | 'baokuan'
+   * @param {Object} params.formData - 表单数据
+   * @param {string} params.fileTexts - 上传文件的文本内容
+   * @param {Function} onChunk - 每次收到文本片段的回调
+   * @param {Function} onDone - 完成回调
+   * @param {Function} onError - 错误回调
+   */
+  async generate({ mode, formData, fileTexts }, { onChunk, onDone, onError }) {
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ mode, formData, fileTexts }),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `请求失败 (${response.status})`);
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let fullText = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || !trimmed.startsWith('data:')) continue;
+
+          const data = trimmed.slice(5).trim();
+          if (data === '[DONE]') continue;
+
+          try {
+            const parsed = JSON.parse(data);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (content) {
+              fullText += content;
+              onChunk(fullText);
+            }
+          } catch {
+            // 忽略解析错误，可能是不完整的 JSON
+          }
+        }
+      }
+
+      // 处理 buffer 中剩余的内容
+      if (buffer.trim()) {
+        const trimmed = buffer.trim();
+        if (trimmed.startsWith('data:')) {
+          const data = trimmed.slice(5).trim();
+          if (data !== '[DONE]') {
+            try {
+              const parsed = JSON.parse(data);
+              const content = parsed.choices?.[0]?.delta?.content;
+              if (content) {
+                fullText += content;
+                onChunk(fullText);
+              }
+            } catch { /* ignore */ }
+          }
+        }
+      }
+
+      onDone(fullText);
+    } catch (err) {
+      onError(err.message);
+    }
+  },
+
+  /**
+   * 微调/重新生成（基于已有结果追加指令）
+   */
+  async refine({ mode, formData, fileTexts, previousResult, refineInstruction }, { onChunk, onDone, onError }) {
+    try {
+      const response = await fetch('/api/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mode, formData, fileTexts,
+          previousResult,
+          refineInstruction,
+        }),
+      });
+
+      if (!response.ok) {
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `请求失败 (${response.status})`);
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+      let fullText = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || !trimmed.startsWith('data:')) continue;
+          const data = trimmed.slice(5).trim();
+          if (data === '[DONE]') continue;
+          try {
+            const parsed = JSON.parse(data);
+            const content = parsed.choices?.[0]?.delta?.content;
+            if (content) {
+              fullText += content;
+              onChunk(fullText);
+            }
+          } catch { /* ignore */ }
+        }
+      }
+
+      onDone(fullText);
+    } catch (err) {
+      onError(err.message);
+    }
+  },
+};
+</script>
+  <script>
+/**
+ * 爆款视频脚本生成工作台 - 主应用逻辑
+ * 基于 Alpine.js 管理状态
+ */
+
+function createApp() {
+  return {
+    // === 主题 ===
+    theme: 'light',
+
+    // === Tab ===
+    activeTab: 'huixiao', // 'huixiao' | 'baokuan'
+
+    // === 步骤 ===
+    currentStep: 1,
+    totalSteps: 5,
+
+    // === 搜索 ===
+    citySearch: '',
+    industrySearch: '',
+
+    // === 会销表单 ===
+    huixiao: {
+      city: '',
+      industry: '',
+      platforms: [],
+      duration: '',
+      sellingPoints: '',
+      targetCustomer: '',
+      targetCustomerCustom: '',
+      style: '',
+      extraNotes: '',
+      files: [], // { id, name, size, text }
+    },
+
+    // === 爆款视频表单 ===
+    baokuan: {
+      city: '',
+      industry: '',
+      videoType: '',
+      duration: '',
+      videoGoal: '',
+      contentPreference: [],
+      targetMarket: '',
+      extraNotes: '',
+      files: [],
+    },
+
+    // === 生成状态 ===
+    isGenerating: false,
+    result: '',
+    generatingText: '', // 实时输出的文本
+    showResult: false,
+
+    // === 微调 ===
+    refineInput: '',
+    isRefining: false,
+
+    // === 历史记录 ===
+    showHistory: false,
+    history: [],
+
+    // === 初始化 ===
+    init() {
+      // 加载主题
+      const savedTheme = localStorage.getItem('vs_theme');
+      if (savedTheme) {
+        this.theme = savedTheme;
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        this.theme = 'dark';
+      }
+      this.applyTheme();
+
+      // 加载历史记录
+      try {
+        const saved = localStorage.getItem('vs_history');
+        if (saved) this.history = JSON.parse(saved);
+      } catch { /* ignore */ }
+
+      // 切换 Tab 时重置步骤和结果
+      this.$watch('activeTab', () => {
+        this.currentStep = 1;
+        this.showResult = false;
+        this.result = '';
+        this.generatingText = '';
+        this.refineInput = '';
+      });
+    },
+
+    // === 主题方法 ===
+    applyTheme() {
+      document.documentElement.classList.toggle('dark', this.theme === 'dark');
+      localStorage.setItem('vs_theme', this.theme);
+    },
+
+    toggleTheme() {
+      this.theme = this.theme === 'light' ? 'dark' : 'light';
+      this.applyTheme();
+    },
+
+    // === Tab 方法 ===
+    switchTab(tab) {
+      if (tab === this.activeTab) return;
+      this.activeTab = tab;
+    },
+
+    // === 当前表单数据引用 ===
+    get formData() {
+      return this[this.activeTab];
+    },
+
+    // === 步骤方法 ===
+    stepLabel(step) {
+      const labels = ['平台/时长', '选择行业', '选择城市', '填写要求', '生成脚本'];
+      return labels[step - 1] || '';
+    },
+
+    stepProgress() {
+      return ((this.currentStep - 1) / (this.totalSteps - 1)) * 100;
+    },
+
+    canProceed() {
+      const f = this.formData;
+      switch (this.currentStep) {
+        case 1: {
+          if (this.activeTab === 'huixiao') {
+            return f.platforms.length > 0 && !!f.duration;
+          } else {
+            return !!f.videoType && !!f.duration;
+          }
+        }
+        case 2: return !!f.industry;
+        case 3: return !!f.city;
+        case 4: {
+          if (this.activeTab === 'huixiao') {
+            return !!f.style;
+          } else {
+            return !!f.videoGoal;
+          }
+        }
+        case 5: return true;
+        default: return false;
+      }
+    },
+
+    nextStep() {
+      if (!this.canProceed()) return;
+      if (this.currentStep < this.totalSteps) {
+        this.currentStep++;
+        this.citySearch = '';
+        this.industrySearch = '';
+      }
+    },
+
+    prevStep() {
+      if (this.currentStep > 1) {
+        this.currentStep--;
+        this.citySearch = '';
+        this.industrySearch = '';
+      }
+    },
+
+    // === 城市选择 ===
+    filteredCities() {
+      const kw = this.citySearch.trim().toLowerCase();
+      const result = [];
+      for (const group of CITY_DATA) {
+        const cities = group.cities.filter(c =>
+          !kw || c.toLowerCase().includes(kw) || group.province.toLowerCase().includes(kw)
+        );
+        if (cities.length > 0) {
+          result.push({ province: group.province, cities });
+        }
+      }
+      return result;
+    },
+
+    selectCity(city) {
+      this.formData.city = city;
+      // 自动跳到下一步
+      this.$nextTick(() => this.nextStep());
+    },
+
+    // === 行业选择 ===
+    filteredIndustries() {
+      const kw = this.industrySearch.trim().toLowerCase();
+      const result = [];
+      for (const group of INDUSTRY_DATA) {
+        const items = group.items.filter(i => !kw || i.toLowerCase().includes(kw) || group.category.toLowerCase().includes(kw));
+        if (items.length > 0) {
+          result.push({ ...group, items });
+        }
+      }
+      return result;
+    },
+
+    selectIndustry(item) {
+      this.formData.industry = item;
+      this.$nextTick(() => this.nextStep());
+    },
+
+    // === 会销 - 平台多选 ===
+    togglePlatform(value) {
+      const idx = this.huixiao.platforms.indexOf(value);
+      if (idx > -1) this.huixiao.platforms.splice(idx, 1);
+      else this.huixiao.platforms.push(value);
+    },
+
+    // === 会销 - 风格单选 ===
+    selectStyle(value) {
+      this.huixiao.style = value;
+    },
+
+    // === 爆款 - 类型单选 ===
+    selectVideoType(value) {
+      this.baokuan.videoType = value;
+    },
+
+    // === 爆款 - 目标单选 ===
+    selectVideoGoal(value) {
+      this.baokuan.videoGoal = value;
+    },
+
+    // === 爆款 - 偏好多选 ===
+    togglePreference(value) {
+      const idx = this.baokuan.contentPreference.indexOf(value);
+      if (idx > -1) this.baokuan.contentPreference.splice(idx, 1);
+      else this.baokuan.contentPreference.push(value);
+    },
+
+    // === 文件处理 ===
+    async handleFileDrop(e) {
+      e.preventDefault();
+      e.currentTarget.classList.remove('dragover');
+      const files = Array.from(e.dataTransfer?.files || []);
+      await this._processFiles(files);
+    },
+
+    async handleFileSelect(e) {
+      const files = Array.from(e.target.files || []);
+      await this._processFiles(files);
+      e.target.value = ''; // reset
+    },
+
+    async _processFiles(files) {
+      for (const file of files) {
+        const validation = FileParser.validate(file);
+        if (!validation.ok) {
+          Utils.showToast(validation.msg, 'error');
+          continue;
+        }
+
+        // 检查重复
+        if (this.formData.files.some(f => f.name === file.name)) {
+          Utils.showToast(`文件 ${file.name} 已添加`, 'error');
+          continue;
+        }
+
+        Utils.showToast(`正在解析 ${file.name}...`, 'info', 1500);
+        const result = await FileParser.parse(file);
+
+        if (result.ok) {
+          this.formData.files.push({
+            id: Utils.uid(),
+            name: file.name,
+            size: file.size,
+            text: result.text,
+          });
+          Utils.showToast(`${file.name} 添加成功`, 'success', 1500);
+        } else {
+          Utils.showToast(result.msg, 'error');
+        }
+      }
+    },
+
+    removeFile(id) {
+      const idx = this.formData.files.findIndex(f => f.id === id);
+      if (idx > -1) this.formData.files.splice(idx, 1);
+    },
+
+    // === 生成脚本 ===
+    async generate() {
+      if (this.isGenerating) return;
+
+      this.isGenerating = true;
+      this.showResult = true;
+      this.generatingText = '';
+      this.result = '';
+      this.refineInput = '';
+
+      const fileTexts = this.formData.files.map(f => `--- ${f.name} ---\n${f.text}`).join('\n\n');
+
+      const formDataForApi = { ...this.formData };
+      delete formDataForApi.files; // 不发送文件对象
+
+      await Api.generate(
+        { mode: this.activeTab, formData: formDataForApi, fileTexts },
+        {
+          onChunk: (text) => {
+            this.generatingText = text;
+            this._scrollResultToBottom();
+          },
+          onDone: (text) => {
+            this.result = text;
+            this.generatingText = text;
+            this.isGenerating = false;
+            this._saveHistory();
+          },
+          onError: (msg) => {
+            this.isGenerating = false;
+            if (!this.generatingText) {
+              this.generatingText = `生成失败: ${msg}\n\n请检查网络连接后重试。`;
+            }
+            Utils.showToast('生成失败: ' + msg, 'error', 4000);
+          },
+        }
+      );
+    },
+
+    // === 微调 ===
+    async refine() {
+      if (!this.refineInput.trim() || this.isRefining) return;
+
+      this.isRefining = true;
+      const instruction = this.refineInput.trim();
+      this.refineInput = '';
+
+      const fileTexts = this.formData.files.map(f => `--- ${f.name} ---\n${f.text}`).join('\n\n');
+      const formDataForApi = { ...this.formData };
+      delete formDataForApi.files;
+
+      let newResult = '';
+
+      await Api.refine(
+        { mode: this.activeTab, formData: formDataForApi, fileTexts, previousResult: this.result, refineInstruction: instruction },
+        {
+          onChunk: (text) => {
+            newResult = text;
+            this.generatingText = text;
+            this._scrollResultToBottom();
+          },
+          onDone: (text) => {
+            this.result = text;
+            this.generatingText = text;
+            this.isRefining = false;
+            this._saveHistory();
+          },
+          onError: (msg) => {
+            this.isRefining = false;
+            Utils.showToast('微调失败: ' + msg, 'error');
+          },
+        }
+      );
+    },
+
+    // === 重新生成 ===
+    regenerate() {
+      this.showResult = false;
+      this.result = '';
+      this.generatingText = '';
+      this.refineInput = '';
+      this.$nextTick(() => this.generate());
+    },
+
+    // === 复制结果 ===
+    async copyResult() {
+      const text = this.result || this.generatingText;
+      const ok = await Utils.copyToClipboard(text);
+      Utils.showToast(ok ? '已复制到剪贴板' : '复制失败', ok ? 'success' : 'error');
+    },
+
+    // === 导出 TXT ===
+    exportResult() {
+      const text = this.result || this.generatingText;
+      const tabName = this.activeTab === 'huixiao' ? '会销脚本' : '爆款视频脚本';
+      const fileName = `${tabName}_${this.formData.industry || ''}_${Utils.formatTime(new Date()).replace(/[: ]/g, '')}.txt`;
+      Utils.exportTxt(text, fileName);
+      Utils.showToast('已导出文件', 'success');
+    },
+
+    // === 返回编辑 ===
+    backToEdit() {
+      this.showResult = false;
+      this.result = '';
+      this.generatingText = '';
+    },
+
+    // === 历史记录 ===
+    toggleHistory() {
+      this.showHistory = !this.showHistory;
+    },
+
+    closeHistory() {
+      this.showHistory = false;
+    },
+
+    _saveHistory() {
+      const item = {
+        id: Utils.uid(),
+        tab: this.activeTab,
+        time: Utils.formatTime(new Date()),
+        city: this.formData.city,
+        industry: this.formData.industry,
+        duration: this.formData.duration,
+        summary: this._buildSummary(),
+        result: this.result,
+        formData: JSON.parse(JSON.stringify({ ...this.formData })),
+      };
+      this.history.unshift(item);
+      if (this.history.length > 20) this.history = this.history.slice(0, 20);
+      try {
+        localStorage.setItem('vs_history', JSON.stringify(this.history));
+      } catch { /* storage full, ignore */ }
+    },
+
+    _buildSummary() {
+      const f = this.formData;
+      if (this.activeTab === 'huixiao') {
+        const platforms = (f.platforms || []).map(v => {
+          const p = HUIXIAO_PLATFORMS.find(x => x.value === v);
+          return p ? p.label : v;
+        }).join('、');
+        return `${f.industry} | ${platforms} | ${f.duration}秒`;
+      } else {
+        const type = BAOKUAN_TYPES.find(x => x.value === f.videoType);
+        return `${f.industry} | ${type?.label || ''} | ${f.duration}秒`;
+      }
+    },
+
+    loadHistory(item) {
+      // 恢复表单数据
+      this.activeTab = item.tab;
+      this.currentStep = 5;
+      this.showResult = true;
+      this.result = item.result;
+      this.generatingText = item.result;
+      this.refineInput = '';
+
+      // 恢复表单字段
+      if (item.formData) {
+        const fd = item.formData;
+        for (const key of Object.keys(fd)) {
+          if (key !== 'files' && key in this.formData) {
+            this.formData[key] = fd[key];
+          }
+        }
+      }
+
+      this.showHistory = false;
+    },
+
+    deleteHistory(id) {
+      this.history = this.history.filter(h => h.id !== id);
+      try {
+        localStorage.setItem('vs_history', JSON.stringify(this.history));
+      } catch { /* ignore */ }
+    },
+
+    clearAllHistory() {
+      this.history = [];
+      localStorage.removeItem('vs_history');
+    },
+
+    // === 辅助 ===
+    _scrollResultToBottom() {
+      this.$nextTick(() => {
+        const el = document.getElementById('result-body');
+        if (el) el.scrollTop = el.scrollHeight;
+      });
+    },
+
+    // 获取选中项目的标签名
+    getSelectedLabel(list, value) {
+      const item = list.find(i => i.value === value);
+      return item ? item.label : value;
+    },
+  };
+}
+</script>
+  <script defer>
+(()=>{var nt=!1,it=!1,W=[],ot=-1;function Ut(e){Rn(e)}function Rn(e){W.includes(e)||W.push(e),Mn()}function Wt(e){let t=W.indexOf(e);t!==-1&&t>ot&&W.splice(t,1)}function Mn(){!it&&!nt&&(nt=!0,queueMicrotask(Nn))}function Nn(){nt=!1,it=!0;for(let e=0;e<W.length;e++)W[e](),ot=e;W.length=0,ot=-1,it=!1}var T,N,$,at,st=!0;function Gt(e){st=!1,e(),st=!0}function Jt(e){T=e.reactive,$=e.release,N=t=>e.effect(t,{scheduler:r=>{st?Ut(r):r()}}),at=e.raw}function ct(e){N=e}function Yt(e){let t=()=>{};return[n=>{let i=N(n);return e._x_effects||(e._x_effects=new Set,e._x_runEffects=()=>{e._x_effects.forEach(o=>o())}),e._x_effects.add(i),t=()=>{i!==void 0&&(e._x_effects.delete(i),$(i))},i},()=>{t()}]}function ve(e,t){let r=!0,n,i=N(()=>{let o=e();JSON.stringify(o),r?n=o:queueMicrotask(()=>{t(o,n),n=o}),r=!1});return()=>$(i)}var Xt=[],Zt=[],Qt=[];function er(e){Qt.push(e)}function te(e,t){typeof t=="function"?(e._x_cleanups||(e._x_cleanups=[]),e._x_cleanups.push(t)):(t=e,Zt.push(t))}function Ae(e){Xt.push(e)}function Oe(e,t,r){e._x_attributeCleanups||(e._x_attributeCleanups={}),e._x_attributeCleanups[t]||(e._x_attributeCleanups[t]=[]),e._x_attributeCleanups[t].push(r)}function lt(e,t){e._x_attributeCleanups&&Object.entries(e._x_attributeCleanups).forEach(([r,n])=>{(t===void 0||t.includes(r))&&(n.forEach(i=>i()),delete e._x_attributeCleanups[r])})}function tr(e){for(e._x_effects?.forEach(Wt);e._x_cleanups?.length;)e._x_cleanups.pop()()}var ut=new MutationObserver(mt),ft=!1;function ue(){ut.observe(document,{subtree:!0,childList:!0,attributes:!0,attributeOldValue:!0}),ft=!0}function dt(){kn(),ut.disconnect(),ft=!1}var le=[];function kn(){let e=ut.takeRecords();le.push(()=>e.length>0&&mt(e));let t=le.length;queueMicrotask(()=>{if(le.length===t)for(;le.length>0;)le.shift()()})}function m(e){if(!ft)return e();dt();let t=e();return ue(),t}var pt=!1,Se=[];function rr(){pt=!0}function nr(){pt=!1,mt(Se),Se=[]}function mt(e){if(pt){Se=Se.concat(e);return}let t=[],r=new Set,n=new Map,i=new Map;for(let o=0;o<e.length;o++)if(!e[o].target._x_ignoreMutationObserver&&(e[o].type==="childList"&&(e[o].removedNodes.forEach(s=>{s.nodeType===1&&s._x_marker&&r.add(s)}),e[o].addedNodes.forEach(s=>{if(s.nodeType===1){if(r.has(s)){r.delete(s);return}s._x_marker||t.push(s)}})),e[o].type==="attributes")){let s=e[o].target,a=e[o].attributeName,c=e[o].oldValue,l=()=>{n.has(s)||n.set(s,[]),n.get(s).push({name:a,value:s.getAttribute(a)})},u=()=>{i.has(s)||i.set(s,[]),i.get(s).push(a)};s.hasAttribute(a)&&c===null?l():s.hasAttribute(a)?(u(),l()):u()}i.forEach((o,s)=>{lt(s,o)}),n.forEach((o,s)=>{Xt.forEach(a=>a(s,o))});for(let o of r)t.some(s=>s.contains(o))||Zt.forEach(s=>s(o));for(let o of t)o.isConnected&&Qt.forEach(s=>s(o));t=null,r=null,n=null,i=null}function Ce(e){return z(B(e))}function k(e,t,r){return e._x_dataStack=[t,...B(r||e)],()=>{e._x_dataStack=e._x_dataStack.filter(n=>n!==t)}}function B(e){return e._x_dataStack?e._x_dataStack:typeof ShadowRoot=="function"&&e instanceof ShadowRoot?B(e.host):e.parentNode?B(e.parentNode):[]}function z(e){return new Proxy({objects:e},Dn)}var Dn={ownKeys({objects:e}){return Array.from(new Set(e.flatMap(t=>Object.keys(t))))},has({objects:e},t){return t==Symbol.unscopables?!1:e.some(r=>Object.prototype.hasOwnProperty.call(r,t)||Reflect.has(r,t))},get({objects:e},t,r){return t=="toJSON"?Pn:Reflect.get(e.find(n=>Reflect.has(n,t))||{},t,r)},set({objects:e},t,r,n){let i=e.find(s=>Object.prototype.hasOwnProperty.call(s,t))||e[e.length-1],o=Object.getOwnPropertyDescriptor(i,t);return o?.set&&o?.get?o.set.call(n,r)||!0:Reflect.set(i,t,r)}};function Pn(){return Reflect.ownKeys(this).reduce((t,r)=>(t[r]=Reflect.get(this,r),t),{})}function Te(e){let t=n=>typeof n=="object"&&!Array.isArray(n)&&n!==null,r=(n,i="")=>{Object.entries(Object.getOwnPropertyDescriptors(n)).forEach(([o,{value:s,enumerable:a}])=>{if(a===!1||s===void 0||typeof s=="object"&&s!==null&&s.__v_skip)return;let c=i===""?o:`${i}.${o}`;typeof s=="object"&&s!==null&&s._x_interceptor?n[o]=s.initialize(e,c,o):t(s)&&s!==n&&!(s instanceof Element)&&r(s,c)})};return r(e)}function Re(e,t=()=>{}){let r={initialValue:void 0,_x_interceptor:!0,initialize(n,i,o){return e(this.initialValue,()=>In(n,i),s=>ht(n,i,s),i,o)}};return t(r),n=>{if(typeof n=="object"&&n!==null&&n._x_interceptor){let i=r.initialize.bind(r);r.initialize=(o,s,a)=>{let c=n.initialize(o,s,a);return r.initialValue=c,i(o,s,a)}}else r.initialValue=n;return r}}function In(e,t){return t.split(".").reduce((r,n)=>r[n],e)}function ht(e,t,r){if(typeof t=="string"&&(t=t.split(".")),t.length===1)e[t[0]]=r;else{if(t.length===0)throw error;return e[t[0]]||(e[t[0]]={}),ht(e[t[0]],t.slice(1),r)}}var ir={};function y(e,t){ir[e]=t}function fe(e,t){let r=Ln(t);return Object.entries(ir).forEach(([n,i])=>{Object.defineProperty(e,`$${n}`,{get(){return i(t,r)},enumerable:!1})}),e}function Ln(e){let[t,r]=_t(e),n={interceptor:Re,...t};return te(e,r),n}function or(e,t,r,...n){try{return r(...n)}catch(i){re(i,e,t)}}function re(e,t,r=void 0){e=Object.assign(e??{message:"No error message given."},{el:t,expression:r}),console.warn(`Alpine Expression Error: ${e.message}
+
+${r?'Expression: "'+r+`"
+
+`:""}`,t),setTimeout(()=>{throw e},0)}var Me=!0;function ke(e){let t=Me;Me=!1;let r=e();return Me=t,r}function R(e,t,r={}){let n;return x(e,t)(i=>n=i,r),n}function x(...e){return sr(...e)}var sr=xt;function ar(e){sr=e}function xt(e,t){let r={};fe(r,e);let n=[r,...B(e)],i=typeof t=="function"?$n(n,t):Fn(n,t,e);return or.bind(null,e,t,i)}function $n(e,t){return(r=()=>{},{scope:n={},params:i=[]}={})=>{let o=t.apply(z([n,...e]),i);Ne(r,o)}}var gt={};function jn(e,t){if(gt[e])return gt[e];let r=Object.getPrototypeOf(async function(){}).constructor,n=/^[\n\s]*if.*\(.*\)/.test(e.trim())||/^(let|const)\s/.test(e.trim())?`(async()=>{ ${e} })()`:e,o=(()=>{try{let s=new r(["__self","scope"],`with (scope) { __self.result = ${n} }; __self.finished = true; return __self.result;`);return Object.defineProperty(s,"name",{value:`[Alpine] ${e}`}),s}catch(s){return re(s,t,e),Promise.resolve()}})();return gt[e]=o,o}function Fn(e,t,r){let n=jn(t,r);return(i=()=>{},{scope:o={},params:s=[]}={})=>{n.result=void 0,n.finished=!1;let a=z([o,...e]);if(typeof n=="function"){let c=n(n,a).catch(l=>re(l,r,t));n.finished?(Ne(i,n.result,a,s,r),n.result=void 0):c.then(l=>{Ne(i,l,a,s,r)}).catch(l=>re(l,r,t)).finally(()=>n.result=void 0)}}}function Ne(e,t,r,n,i){if(Me&&typeof t=="function"){let o=t.apply(r,n);o instanceof Promise?o.then(s=>Ne(e,s,r,n)).catch(s=>re(s,i,t)):e(o)}else typeof t=="object"&&t instanceof Promise?t.then(o=>e(o)):e(t)}var wt="x-";function C(e=""){return wt+e}function cr(e){wt=e}var De={};function d(e,t){return De[e]=t,{before(r){if(!De[r]){console.warn(String.raw`Cannot find directive \`${r}\`. \`${e}\` will use the default order of execution`);return}let n=G.indexOf(r);G.splice(n>=0?n:G.indexOf("DEFAULT"),0,e)}}}function lr(e){return Object.keys(De).includes(e)}function pe(e,t,r){if(t=Array.from(t),e._x_virtualDirectives){let o=Object.entries(e._x_virtualDirectives).map(([a,c])=>({name:a,value:c})),s=Et(o);o=o.map(a=>s.find(c=>c.name===a.name)?{name:`x-bind:${a.name}`,value:`"${a.value}"`}:a),t=t.concat(o)}let n={};return t.map(dr((o,s)=>n[o]=s)).filter(mr).map(zn(n,r)).sort(Kn).map(o=>Bn(e,o))}function Et(e){return Array.from(e).map(dr()).filter(t=>!mr(t))}var yt=!1,de=new Map,ur=Symbol();function fr(e){yt=!0;let t=Symbol();ur=t,de.set(t,[]);let r=()=>{for(;de.get(t).length;)de.get(t).shift()();de.delete(t)},n=()=>{yt=!1,r()};e(r),n()}function _t(e){let t=[],r=a=>t.push(a),[n,i]=Yt(e);return t.push(i),[{Alpine:K,effect:n,cleanup:r,evaluateLater:x.bind(x,e),evaluate:R.bind(R,e)},()=>t.forEach(a=>a())]}function Bn(e,t){let r=()=>{},n=De[t.type]||r,[i,o]=_t(e);Oe(e,t.original,o);let s=()=>{e._x_ignore||e._x_ignoreSelf||(n.inline&&n.inline(e,t,i),n=n.bind(n,e,t,i),yt?de.get(ur).push(n):n())};return s.runCleanups=o,s}var Pe=(e,t)=>({name:r,value:n})=>(r.startsWith(e)&&(r=r.replace(e,t)),{name:r,value:n}),Ie=e=>e;function dr(e=()=>{}){return({name:t,value:r})=>{let{name:n,value:i}=pr.reduce((o,s)=>s(o),{name:t,value:r});return n!==t&&e(n,t),{name:n,value:i}}}var pr=[];function ne(e){pr.push(e)}function mr({name:e}){return hr().test(e)}var hr=()=>new RegExp(`^${wt}([^:^.]+)\\b`);function zn(e,t){return({name:r,value:n})=>{let i=r.match(hr()),o=r.match(/:([a-zA-Z0-9\-_:]+)/),s=r.match(/\.[^.\]]+(?=[^\]]*$)/g)||[],a=t||e[r]||r;return{type:i?i[1]:null,value:o?o[1]:null,modifiers:s.map(c=>c.replace(".","")),expression:n,original:a}}}var bt="DEFAULT",G=["ignore","ref","data","id","anchor","bind","init","for","model","modelable","transition","show","if",bt,"teleport"];function Kn(e,t){let r=G.indexOf(e.type)===-1?bt:e.type,n=G.indexOf(t.type)===-1?bt:t.type;return G.indexOf(r)-G.indexOf(n)}function J(e,t,r={}){e.dispatchEvent(new CustomEvent(t,{detail:r,bubbles:!0,composed:!0,cancelable:!0}))}function D(e,t){if(typeof ShadowRoot=="function"&&e instanceof ShadowRoot){Array.from(e.children).forEach(i=>D(i,t));return}let r=!1;if(t(e,()=>r=!0),r)return;let n=e.firstElementChild;for(;n;)D(n,t,!1),n=n.nextElementSibling}function E(e,...t){console.warn(`Alpine Warning: ${e}`,...t)}var _r=!1;function gr(){_r&&E("Alpine has already been initialized on this page. Calling Alpine.start() more than once can cause problems."),_r=!0,document.body||E("Unable to initialize. Trying to load Alpine before `<body>` is available. Did you forget to add `defer` in Alpine's `<script>` tag?"),J(document,"alpine:init"),J(document,"alpine:initializing"),ue(),er(t=>S(t,D)),te(t=>P(t)),Ae((t,r)=>{pe(t,r).forEach(n=>n())});let e=t=>!Y(t.parentElement,!0);Array.from(document.querySelectorAll(br().join(","))).filter(e).forEach(t=>{S(t)}),J(document,"alpine:initialized"),setTimeout(()=>{Vn()})}var vt=[],xr=[];function yr(){return vt.map(e=>e())}function br(){return vt.concat(xr).map(e=>e())}function Le(e){vt.push(e)}function $e(e){xr.push(e)}function Y(e,t=!1){return j(e,r=>{if((t?br():yr()).some(i=>r.matches(i)))return!0})}function j(e,t){if(e){if(t(e))return e;if(e._x_teleportBack&&(e=e._x_teleportBack),!!e.parentElement)return j(e.parentElement,t)}}function wr(e){return yr().some(t=>e.matches(t))}var Er=[];function vr(e){Er.push(e)}var Hn=1;function S(e,t=D,r=()=>{}){j(e,n=>n._x_ignore)||fr(()=>{t(e,(n,i)=>{n._x_marker||(r(n,i),Er.forEach(o=>o(n,i)),pe(n,n.attributes).forEach(o=>o()),n._x_ignore||(n._x_marker=Hn++),n._x_ignore&&i())})})}function P(e,t=D){t(e,r=>{tr(r),lt(r),delete r._x_marker})}function Vn(){[["ui","dialog",["[x-dialog], [x-popover]"]],["anchor","anchor",["[x-anchor]"]],["sort","sort",["[x-sort]"]]].forEach(([t,r,n])=>{lr(r)||n.some(i=>{if(document.querySelector(i))return E(`found "${i}", but missing ${t} plugin`),!0})})}var St=[],At=!1;function ie(e=()=>{}){return queueMicrotask(()=>{At||setTimeout(()=>{je()})}),new Promise(t=>{St.push(()=>{e(),t()})})}function je(){for(At=!1;St.length;)St.shift()()}function Sr(){At=!0}function me(e,t){return Array.isArray(t)?Ar(e,t.join(" ")):typeof t=="object"&&t!==null?qn(e,t):typeof t=="function"?me(e,t()):Ar(e,t)}function Ar(e,t){let r=o=>o.split(" ").filter(Boolean),n=o=>o.split(" ").filter(s=>!e.classList.contains(s)).filter(Boolean),i=o=>(e.classList.add(...o),()=>{e.classList.remove(...o)});return t=t===!0?t="":t||"",i(n(t))}function qn(e,t){let r=a=>a.split(" ").filter(Boolean),n=Object.entries(t).flatMap(([a,c])=>c?r(a):!1).filter(Boolean),i=Object.entries(t).flatMap(([a,c])=>c?!1:r(a)).filter(Boolean),o=[],s=[];return i.forEach(a=>{e.classList.contains(a)&&(e.classList.remove(a),s.push(a))}),n.forEach(a=>{e.classList.contains(a)||(e.classList.add(a),o.push(a))}),()=>{s.forEach(a=>e.classList.add(a)),o.forEach(a=>e.classList.remove(a))}}function X(e,t){return typeof t=="object"&&t!==null?Un(e,t):Wn(e,t)}function Un(e,t){let r={};return Object.entries(t).forEach(([n,i])=>{r[n]=e.style[n],n.startsWith("--")||(n=Gn(n)),e.style.setProperty(n,i)}),setTimeout(()=>{e.style.length===0&&e.removeAttribute("style")}),()=>{X(e,r)}}function Wn(e,t){let r=e.getAttribute("style",t);return e.setAttribute("style",t),()=>{e.setAttribute("style",r||"")}}function Gn(e){return e.replace(/([a-z])([A-Z])/g,"$1-$2").toLowerCase()}function he(e,t=()=>{}){let r=!1;return function(){r?t.apply(this,arguments):(r=!0,e.apply(this,arguments))}}d("transition",(e,{value:t,modifiers:r,expression:n},{evaluate:i})=>{typeof n=="function"&&(n=i(n)),n!==!1&&(!n||typeof n=="boolean"?Yn(e,r,t):Jn(e,n,t))});function Jn(e,t,r){Or(e,me,""),{enter:i=>{e._x_transition.enter.during=i},"enter-start":i=>{e._x_transition.enter.start=i},"enter-end":i=>{e._x_transition.enter.end=i},leave:i=>{e._x_transition.leave.during=i},"leave-start":i=>{e._x_transition.leave.start=i},"leave-end":i=>{e._x_transition.leave.end=i}}[r](t)}function Yn(e,t,r){Or(e,X);let n=!t.includes("in")&&!t.includes("out")&&!r,i=n||t.includes("in")||["enter"].includes(r),o=n||t.includes("out")||["leave"].includes(r);t.includes("in")&&!n&&(t=t.filter((g,b)=>b<t.indexOf("out"))),t.includes("out")&&!n&&(t=t.filter((g,b)=>b>t.indexOf("out")));let s=!t.includes("opacity")&&!t.includes("scale"),a=s||t.includes("opacity"),c=s||t.includes("scale"),l=a?0:1,u=c?_e(t,"scale",95)/100:1,p=_e(t,"delay",0)/1e3,h=_e(t,"origin","center"),w="opacity, transform",F=_e(t,"duration",150)/1e3,Ee=_e(t,"duration",75)/1e3,f="cubic-bezier(0.4, 0.0, 0.2, 1)";i&&(e._x_transition.enter.during={transformOrigin:h,transitionDelay:`${p}s`,transitionProperty:w,transitionDuration:`${F}s`,transitionTimingFunction:f},e._x_transition.enter.start={opacity:l,transform:`scale(${u})`},e._x_transition.enter.end={opacity:1,transform:"scale(1)"}),o&&(e._x_transition.leave.during={transformOrigin:h,transitionDelay:`${p}s`,transitionProperty:w,transitionDuration:`${Ee}s`,transitionTimingFunction:f},e._x_transition.leave.start={opacity:1,transform:"scale(1)"},e._x_transition.leave.end={opacity:l,transform:`scale(${u})`})}function Or(e,t,r={}){e._x_transition||(e._x_transition={enter:{during:r,start:r,end:r},leave:{during:r,start:r,end:r},in(n=()=>{},i=()=>{}){Fe(e,t,{during:this.enter.during,start:this.enter.start,end:this.enter.end},n,i)},out(n=()=>{},i=()=>{}){Fe(e,t,{during:this.leave.during,start:this.leave.start,end:this.leave.end},n,i)}})}window.Element.prototype._x_toggleAndCascadeWithTransitions=function(e,t,r,n){let i=document.visibilityState==="visible"?requestAnimationFrame:setTimeout,o=()=>i(r);if(t){e._x_transition&&(e._x_transition.enter||e._x_transition.leave)?e._x_transition.enter&&(Object.entries(e._x_transition.enter.during).length||Object.entries(e._x_transition.enter.start).length||Object.entries(e._x_transition.enter.end).length)?e._x_transition.in(r):o():e._x_transition?e._x_transition.in(r):o();return}e._x_hidePromise=e._x_transition?new Promise((s,a)=>{e._x_transition.out(()=>{},()=>s(n)),e._x_transitioning&&e._x_transitioning.beforeCancel(()=>a({isFromCancelledTransition:!0}))}):Promise.resolve(n),queueMicrotask(()=>{let s=Cr(e);s?(s._x_hideChildren||(s._x_hideChildren=[]),s._x_hideChildren.push(e)):i(()=>{let a=c=>{let l=Promise.all([c._x_hidePromise,...(c._x_hideChildren||[]).map(a)]).then(([u])=>u?.());return delete c._x_hidePromise,delete c._x_hideChildren,l};a(e).catch(c=>{if(!c.isFromCancelledTransition)throw c})})})};function Cr(e){let t=e.parentNode;if(t)return t._x_hidePromise?t:Cr(t)}function Fe(e,t,{during:r,start:n,end:i}={},o=()=>{},s=()=>{}){if(e._x_transitioning&&e._x_transitioning.cancel(),Object.keys(r).length===0&&Object.keys(n).length===0&&Object.keys(i).length===0){o(),s();return}let a,c,l;Xn(e,{start(){a=t(e,n)},during(){c=t(e,r)},before:o,end(){a(),l=t(e,i)},after:s,cleanup(){c(),l()}})}function Xn(e,t){let r,n,i,o=he(()=>{m(()=>{r=!0,n||t.before(),i||(t.end(),je()),t.after(),e.isConnected&&t.cleanup(),delete e._x_transitioning})});e._x_transitioning={beforeCancels:[],beforeCancel(s){this.beforeCancels.push(s)},cancel:he(function(){for(;this.beforeCancels.length;)this.beforeCancels.shift()();o()}),finish:o},m(()=>{t.start(),t.during()}),Sr(),requestAnimationFrame(()=>{if(r)return;let s=Number(getComputedStyle(e).transitionDuration.replace(/,.*/,"").replace("s",""))*1e3,a=Number(getComputedStyle(e).transitionDelay.replace(/,.*/,"").replace("s",""))*1e3;s===0&&(s=Number(getComputedStyle(e).animationDuration.replace("s",""))*1e3),m(()=>{t.before()}),n=!0,requestAnimationFrame(()=>{r||(m(()=>{t.end()}),je(),setTimeout(e._x_transitioning.finish,s+a),i=!0)})})}function _e(e,t,r){if(e.indexOf(t)===-1)return r;let n=e[e.indexOf(t)+1];if(!n||t==="scale"&&isNaN(n))return r;if(t==="duration"||t==="delay"){let i=n.match(/([0-9]+)ms/);if(i)return i[1]}return t==="origin"&&["top","right","left","center","bottom"].includes(e[e.indexOf(t)+2])?[n,e[e.indexOf(t)+2]].join(" "):n}var I=!1;function A(e,t=()=>{}){return(...r)=>I?t(...r):e(...r)}function Tr(e){return(...t)=>I&&e(...t)}var Rr=[];function H(e){Rr.push(e)}function Mr(e,t){Rr.forEach(r=>r(e,t)),I=!0,kr(()=>{S(t,(r,n)=>{n(r,()=>{})})}),I=!1}var Be=!1;function Nr(e,t){t._x_dataStack||(t._x_dataStack=e._x_dataStack),I=!0,Be=!0,kr(()=>{Zn(t)}),I=!1,Be=!1}function Zn(e){let t=!1;S(e,(n,i)=>{D(n,(o,s)=>{if(t&&wr(o))return s();t=!0,i(o,s)})})}function kr(e){let t=N;ct((r,n)=>{let i=t(r);return $(i),()=>{}}),e(),ct(t)}function ge(e,t,r,n=[]){switch(e._x_bindings||(e._x_bindings=T({})),e._x_bindings[t]=r,t=n.includes("camel")?si(t):t,t){case"value":Qn(e,r);break;case"style":ti(e,r);break;case"class":ei(e,r);break;case"selected":case"checked":ri(e,t,r);break;default:Pr(e,t,r);break}}function Qn(e,t){if(Ot(e))e.attributes.value===void 0&&(e.value=t),window.fromModel&&(typeof t=="boolean"?e.checked=xe(e.value)===t:e.checked=Dr(e.value,t));else if(ze(e))Number.isInteger(t)?e.value=t:!Array.isArray(t)&&typeof t!="boolean"&&![null,void 0].includes(t)?e.value=String(t):Array.isArray(t)?e.checked=t.some(r=>Dr(r,e.value)):e.checked=!!t;else if(e.tagName==="SELECT")oi(e,t);else{if(e.value===t)return;e.value=t===void 0?"":t}}function ei(e,t){e._x_undoAddedClasses&&e._x_undoAddedClasses(),e._x_undoAddedClasses=me(e,t)}function ti(e,t){e._x_undoAddedStyles&&e._x_undoAddedStyles(),e._x_undoAddedStyles=X(e,t)}function ri(e,t,r){Pr(e,t,r),ii(e,t,r)}function Pr(e,t,r){[null,void 0,!1].includes(r)&&ci(t)?e.removeAttribute(t):(Ir(t)&&(r=t),ni(e,t,r))}function ni(e,t,r){e.getAttribute(t)!=r&&e.setAttribute(t,r)}function ii(e,t,r){e[t]!==r&&(e[t]=r)}function oi(e,t){let r=[].concat(t).map(n=>n+"");Array.from(e.options).forEach(n=>{n.selected=r.includes(n.value)})}function si(e){return e.toLowerCase().replace(/-(\w)/g,(t,r)=>r.toUpperCase())}function Dr(e,t){return e==t}function xe(e){return[1,"1","true","on","yes",!0].includes(e)?!0:[0,"0","false","off","no",!1].includes(e)?!1:e?Boolean(e):null}var ai=new Set(["allowfullscreen","async","autofocus","autoplay","checked","controls","default","defer","disabled","formnovalidate","inert","ismap","itemscope","loop","multiple","muted","nomodule","novalidate","open","playsinline","readonly","required","reversed","selected","shadowrootclonable","shadowrootdelegatesfocus","shadowrootserializable"]);function Ir(e){return ai.has(e)}function ci(e){return!["aria-pressed","aria-checked","aria-expanded","aria-selected"].includes(e)}function Lr(e,t,r){return e._x_bindings&&e._x_bindings[t]!==void 0?e._x_bindings[t]:jr(e,t,r)}function $r(e,t,r,n=!0){if(e._x_bindings&&e._x_bindings[t]!==void 0)return e._x_bindings[t];if(e._x_inlineBindings&&e._x_inlineBindings[t]!==void 0){let i=e._x_inlineBindings[t];return i.extract=n,ke(()=>R(e,i.expression))}return jr(e,t,r)}function jr(e,t,r){let n=e.getAttribute(t);return n===null?typeof r=="function"?r():r:n===""?!0:Ir(t)?!![t,"true"].includes(n):n}function ze(e){return e.type==="checkbox"||e.localName==="ui-checkbox"||e.localName==="ui-switch"}function Ot(e){return e.type==="radio"||e.localName==="ui-radio"}function Ke(e,t){var r;return function(){var n=this,i=arguments,o=function(){r=null,e.apply(n,i)};clearTimeout(r),r=setTimeout(o,t)}}function He(e,t){let r;return function(){let n=this,i=arguments;r||(e.apply(n,i),r=!0,setTimeout(()=>r=!1,t))}}function Ve({get:e,set:t},{get:r,set:n}){let i=!0,o,s,a=N(()=>{let c=e(),l=r();if(i)n(Ct(c)),i=!1;else{let u=JSON.stringify(c),p=JSON.stringify(l);u!==o?n(Ct(c)):u!==p&&t(Ct(l))}o=JSON.stringify(e()),s=JSON.stringify(r())});return()=>{$(a)}}function Ct(e){return typeof e=="object"?JSON.parse(JSON.stringify(e)):e}function Fr(e){(Array.isArray(e)?e:[e]).forEach(r=>r(K))}var Z={},Br=!1;function zr(e,t){if(Br||(Z=T(Z),Br=!0),t===void 0)return Z[e];Z[e]=t,Te(Z[e]),typeof t=="object"&&t!==null&&t.hasOwnProperty("init")&&typeof t.init=="function"&&Z[e].init()}function Kr(){return Z}var Hr={};function Vr(e,t){let r=typeof t!="function"?()=>t:t;return e instanceof Element?Tt(e,r()):(Hr[e]=r,()=>{})}function qr(e){return Object.entries(Hr).forEach(([t,r])=>{Object.defineProperty(e,t,{get(){return(...n)=>r(...n)}})}),e}function Tt(e,t,r){let n=[];for(;n.length;)n.pop()();let i=Object.entries(t).map(([s,a])=>({name:s,value:a})),o=Et(i);return i=i.map(s=>o.find(a=>a.name===s.name)?{name:`x-bind:${s.name}`,value:`"${s.value}"`}:s),pe(e,i,r).map(s=>{n.push(s.runCleanups),s()}),()=>{for(;n.length;)n.pop()()}}var Ur={};function Wr(e,t){Ur[e]=t}function Gr(e,t){return Object.entries(Ur).forEach(([r,n])=>{Object.defineProperty(e,r,{get(){return(...i)=>n.bind(t)(...i)},enumerable:!1})}),e}var li={get reactive(){return T},get release(){return $},get effect(){return N},get raw(){return at},version:"3.14.8",flushAndStopDeferringMutations:nr,dontAutoEvaluateFunctions:ke,disableEffectScheduling:Gt,startObservingMutations:ue,stopObservingMutations:dt,setReactivityEngine:Jt,onAttributeRemoved:Oe,onAttributesAdded:Ae,closestDataStack:B,skipDuringClone:A,onlyDuringClone:Tr,addRootSelector:Le,addInitSelector:$e,interceptClone:H,addScopeToNode:k,deferMutations:rr,mapAttributes:ne,evaluateLater:x,interceptInit:vr,setEvaluator:ar,mergeProxies:z,extractProp:$r,findClosest:j,onElRemoved:te,closestRoot:Y,destroyTree:P,interceptor:Re,transition:Fe,setStyles:X,mutateDom:m,directive:d,entangle:Ve,throttle:He,debounce:Ke,evaluate:R,initTree:S,nextTick:ie,prefixed:C,prefix:cr,plugin:Fr,magic:y,store:zr,start:gr,clone:Nr,cloneNode:Mr,bound:Lr,$data:Ce,watch:ve,walk:D,data:Wr,bind:Vr},K=li;function Rt(e,t){let r=Object.create(null),n=e.split(",");for(let i=0;i<n.length;i++)r[n[i]]=!0;return t?i=>!!r[i.toLowerCase()]:i=>!!r[i]}var ui="itemscope,allowfullscreen,formnovalidate,ismap,nomodule,novalidate,readonly";var Ls=Rt(ui+",async,autofocus,autoplay,controls,default,defer,disabled,hidden,loop,open,required,reversed,scoped,seamless,checked,muted,multiple,selected");var Jr=Object.freeze({}),$s=Object.freeze([]);var fi=Object.prototype.hasOwnProperty,ye=(e,t)=>fi.call(e,t),V=Array.isArray,oe=e=>Yr(e)==="[object Map]";var di=e=>typeof e=="string",qe=e=>typeof e=="symbol",be=e=>e!==null&&typeof e=="object";var pi=Object.prototype.toString,Yr=e=>pi.call(e),Mt=e=>Yr(e).slice(8,-1);var Ue=e=>di(e)&&e!=="NaN"&&e[0]!=="-"&&""+parseInt(e,10)===e;var We=e=>{let t=Object.create(null);return r=>t[r]||(t[r]=e(r))},mi=/-(\w)/g,js=We(e=>e.replace(mi,(t,r)=>r?r.toUpperCase():"")),hi=/\B([A-Z])/g,Fs=We(e=>e.replace(hi,"-$1").toLowerCase()),Nt=We(e=>e.charAt(0).toUpperCase()+e.slice(1)),Bs=We(e=>e?`on${Nt(e)}`:""),kt=(e,t)=>e!==t&&(e===e||t===t);var Dt=new WeakMap,we=[],L,Q=Symbol("iterate"),Pt=Symbol("Map key iterate");function _i(e){return e&&e._isEffect===!0}function rn(e,t=Jr){_i(e)&&(e=e.raw);let r=xi(e,t);return t.lazy||r(),r}function nn(e){e.active&&(on(e),e.options.onStop&&e.options.onStop(),e.active=!1)}var gi=0;function xi(e,t){let r=function(){if(!r.active)return e();if(!we.includes(r)){on(r);try{return bi(),we.push(r),L=r,e()}finally{we.pop(),sn(),L=we[we.length-1]}}};return r.id=gi++,r.allowRecurse=!!t.allowRecurse,r._isEffect=!0,r.active=!0,r.raw=e,r.deps=[],r.options=t,r}function on(e){let{deps:t}=e;if(t.length){for(let r=0;r<t.length;r++)t[r].delete(e);t.length=0}}var se=!0,Lt=[];function yi(){Lt.push(se),se=!1}function bi(){Lt.push(se),se=!0}function sn(){let e=Lt.pop();se=e===void 0?!0:e}function M(e,t,r){if(!se||L===void 0)return;let n=Dt.get(e);n||Dt.set(e,n=new Map);let i=n.get(r);i||n.set(r,i=new Set),i.has(L)||(i.add(L),L.deps.push(i),L.options.onTrack&&L.options.onTrack({effect:L,target:e,type:t,key:r}))}function U(e,t,r,n,i,o){let s=Dt.get(e);if(!s)return;let a=new Set,c=u=>{u&&u.forEach(p=>{(p!==L||p.allowRecurse)&&a.add(p)})};if(t==="clear")s.forEach(c);else if(r==="length"&&V(e))s.forEach((u,p)=>{(p==="length"||p>=n)&&c(u)});else switch(r!==void 0&&c(s.get(r)),t){case"add":V(e)?Ue(r)&&c(s.get("length")):(c(s.get(Q)),oe(e)&&c(s.get(Pt)));break;case"delete":V(e)||(c(s.get(Q)),oe(e)&&c(s.get(Pt)));break;case"set":oe(e)&&c(s.get(Q));break}let l=u=>{u.options.onTrigger&&u.options.onTrigger({effect:u,target:e,key:r,type:t,newValue:n,oldValue:i,oldTarget:o}),u.options.scheduler?u.options.scheduler(u):u()};a.forEach(l)}var wi=Rt("__proto__,__v_isRef,__isVue"),an=new Set(Object.getOwnPropertyNames(Symbol).map(e=>Symbol[e]).filter(qe)),Ei=cn();var vi=cn(!0);var Xr=Si();function Si(){let e={};return["includes","indexOf","lastIndexOf"].forEach(t=>{e[t]=function(...r){let n=_(this);for(let o=0,s=this.length;o<s;o++)M(n,"get",o+"");let i=n[t](...r);return i===-1||i===!1?n[t](...r.map(_)):i}}),["push","pop","shift","unshift","splice"].forEach(t=>{e[t]=function(...r){yi();let n=_(this)[t].apply(this,r);return sn(),n}}),e}function cn(e=!1,t=!1){return function(n,i,o){if(i==="__v_isReactive")return!e;if(i==="__v_isReadonly")return e;if(i==="__v_raw"&&o===(e?t?Bi:dn:t?Fi:fn).get(n))return n;let s=V(n);if(!e&&s&&ye(Xr,i))return Reflect.get(Xr,i,o);let a=Reflect.get(n,i,o);return(qe(i)?an.has(i):wi(i))||(e||M(n,"get",i),t)?a:It(a)?!s||!Ue(i)?a.value:a:be(a)?e?pn(a):et(a):a}}var Ai=Oi();function Oi(e=!1){return function(r,n,i,o){let s=r[n];if(!e&&(i=_(i),s=_(s),!V(r)&&It(s)&&!It(i)))return s.value=i,!0;let a=V(r)&&Ue(n)?Number(n)<r.length:ye(r,n),c=Reflect.set(r,n,i,o);return r===_(o)&&(a?kt(i,s)&&U(r,"set",n,i,s):U(r,"add",n,i)),c}}function Ci(e,t){let r=ye(e,t),n=e[t],i=Reflect.deleteProperty(e,t);return i&&r&&U(e,"delete",t,void 0,n),i}function Ti(e,t){let r=Reflect.has(e,t);return(!qe(t)||!an.has(t))&&M(e,"has",t),r}function Ri(e){return M(e,"iterate",V(e)?"length":Q),Reflect.ownKeys(e)}var Mi={get:Ei,set:Ai,deleteProperty:Ci,has:Ti,ownKeys:Ri},Ni={get:vi,set(e,t){return console.warn(`Set operation on key "${String(t)}" failed: target is readonly.`,e),!0},deleteProperty(e,t){return console.warn(`Delete operation on key "${String(t)}" failed: target is readonly.`,e),!0}};var $t=e=>be(e)?et(e):e,jt=e=>be(e)?pn(e):e,Ft=e=>e,Qe=e=>Reflect.getPrototypeOf(e);function Ge(e,t,r=!1,n=!1){e=e.__v_raw;let i=_(e),o=_(t);t!==o&&!r&&M(i,"get",t),!r&&M(i,"get",o);let{has:s}=Qe(i),a=n?Ft:r?jt:$t;if(s.call(i,t))return a(e.get(t));if(s.call(i,o))return a(e.get(o));e!==i&&e.get(t)}function Je(e,t=!1){let r=this.__v_raw,n=_(r),i=_(e);return e!==i&&!t&&M(n,"has",e),!t&&M(n,"has",i),e===i?r.has(e):r.has(e)||r.has(i)}function Ye(e,t=!1){return e=e.__v_raw,!t&&M(_(e),"iterate",Q),Reflect.get(e,"size",e)}function Zr(e){e=_(e);let t=_(this);return Qe(t).has.call(t,e)||(t.add(e),U(t,"add",e,e)),this}function Qr(e,t){t=_(t);let r=_(this),{has:n,get:i}=Qe(r),o=n.call(r,e);o?un(r,n,e):(e=_(e),o=n.call(r,e));let s=i.call(r,e);return r.set(e,t),o?kt(t,s)&&U(r,"set",e,t,s):U(r,"add",e,t),this}function en(e){let t=_(this),{has:r,get:n}=Qe(t),i=r.call(t,e);i?un(t,r,e):(e=_(e),i=r.call(t,e));let o=n?n.call(t,e):void 0,s=t.delete(e);return i&&U(t,"delete",e,void 0,o),s}function tn(){let e=_(this),t=e.size!==0,r=oe(e)?new Map(e):new Set(e),n=e.clear();return t&&U(e,"clear",void 0,void 0,r),n}function Xe(e,t){return function(n,i){let o=this,s=o.__v_raw,a=_(s),c=t?Ft:e?jt:$t;return!e&&M(a,"iterate",Q),s.forEach((l,u)=>n.call(i,c(l),c(u),o))}}function Ze(e,t,r){return function(...n){let i=this.__v_raw,o=_(i),s=oe(o),a=e==="entries"||e===Symbol.iterator&&s,c=e==="keys"&&s,l=i[e](...n),u=r?Ft:t?jt:$t;return!t&&M(o,"iterate",c?Pt:Q),{next(){let{value:p,done:h}=l.next();return h?{value:p,done:h}:{value:a?[u(p[0]),u(p[1])]:u(p),done:h}},[Symbol.iterator](){return this}}}}function q(e){return function(...t){{let r=t[0]?`on key "${t[0]}" `:"";console.warn(`${Nt(e)} operation ${r}failed: target is readonly.`,_(this))}return e==="delete"?!1:this}}function ki(){let e={get(o){return Ge(this,o)},get size(){return Ye(this)},has:Je,add:Zr,set:Qr,delete:en,clear:tn,forEach:Xe(!1,!1)},t={get(o){return Ge(this,o,!1,!0)},get size(){return Ye(this)},has:Je,add:Zr,set:Qr,delete:en,clear:tn,forEach:Xe(!1,!0)},r={get(o){return Ge(this,o,!0)},get size(){return Ye(this,!0)},has(o){return Je.call(this,o,!0)},add:q("add"),set:q("set"),delete:q("delete"),clear:q("clear"),forEach:Xe(!0,!1)},n={get(o){return Ge(this,o,!0,!0)},get size(){return Ye(this,!0)},has(o){return Je.call(this,o,!0)},add:q("add"),set:q("set"),delete:q("delete"),clear:q("clear"),forEach:Xe(!0,!0)};return["keys","values","entries",Symbol.iterator].forEach(o=>{e[o]=Ze(o,!1,!1),r[o]=Ze(o,!0,!1),t[o]=Ze(o,!1,!0),n[o]=Ze(o,!0,!0)}),[e,r,t,n]}var[Di,Pi,Ii,Li]=ki();function ln(e,t){let r=t?e?Li:Ii:e?Pi:Di;return(n,i,o)=>i==="__v_isReactive"?!e:i==="__v_isReadonly"?e:i==="__v_raw"?n:Reflect.get(ye(r,i)&&i in n?r:n,i,o)}var $i={get:ln(!1,!1)};var ji={get:ln(!0,!1)};function un(e,t,r){let n=_(r);if(n!==r&&t.call(e,n)){let i=Mt(e);console.warn(`Reactive ${i} contains both the raw and reactive versions of the same object${i==="Map"?" as keys":""}, which can lead to inconsistencies. Avoid differentiating between the raw and reactive versions of an object and only use the reactive version if possible.`)}}var fn=new WeakMap,Fi=new WeakMap,dn=new WeakMap,Bi=new WeakMap;function zi(e){switch(e){case"Object":case"Array":return 1;case"Map":case"Set":case"WeakMap":case"WeakSet":return 2;default:return 0}}function Ki(e){return e.__v_skip||!Object.isExtensible(e)?0:zi(Mt(e))}function et(e){return e&&e.__v_isReadonly?e:mn(e,!1,Mi,$i,fn)}function pn(e){return mn(e,!0,Ni,ji,dn)}function mn(e,t,r,n,i){if(!be(e))return console.warn(`value cannot be made reactive: ${String(e)}`),e;if(e.__v_raw&&!(t&&e.__v_isReactive))return e;let o=i.get(e);if(o)return o;let s=Ki(e);if(s===0)return e;let a=new Proxy(e,s===2?n:r);return i.set(e,a),a}function _(e){return e&&_(e.__v_raw)||e}function It(e){return Boolean(e&&e.__v_isRef===!0)}y("nextTick",()=>ie);y("dispatch",e=>J.bind(J,e));y("watch",(e,{evaluateLater:t,cleanup:r})=>(n,i)=>{let o=t(n),a=ve(()=>{let c;return o(l=>c=l),c},i);r(a)});y("store",Kr);y("data",e=>Ce(e));y("root",e=>Y(e));y("refs",e=>(e._x_refs_proxy||(e._x_refs_proxy=z(Hi(e))),e._x_refs_proxy));function Hi(e){let t=[];return j(e,r=>{r._x_refs&&t.push(r._x_refs)}),t}var Bt={};function zt(e){return Bt[e]||(Bt[e]=0),++Bt[e]}function hn(e,t){return j(e,r=>{if(r._x_ids&&r._x_ids[t])return!0})}function _n(e,t){e._x_ids||(e._x_ids={}),e._x_ids[t]||(e._x_ids[t]=zt(t))}y("id",(e,{cleanup:t})=>(r,n=null)=>{let i=`${r}${n?`-${n}`:""}`;return Vi(e,i,t,()=>{let o=hn(e,r),s=o?o._x_ids[r]:zt(r);return n?`${r}-${s}-${n}`:`${r}-${s}`})});H((e,t)=>{e._x_id&&(t._x_id=e._x_id)});function Vi(e,t,r,n){if(e._x_id||(e._x_id={}),e._x_id[t])return e._x_id[t];let i=n();return e._x_id[t]=i,r(()=>{delete e._x_id[t]}),i}y("el",e=>e);gn("Focus","focus","focus");gn("Persist","persist","persist");function gn(e,t,r){y(t,n=>E(`You can't use [$${t}] without first installing the "${e}" plugin here: https://alpinejs.dev/plugins/${r}`,n))}d("modelable",(e,{expression:t},{effect:r,evaluateLater:n,cleanup:i})=>{let o=n(t),s=()=>{let u;return o(p=>u=p),u},a=n(`${t} = __placeholder`),c=u=>a(()=>{},{scope:{__placeholder:u}}),l=s();c(l),queueMicrotask(()=>{if(!e._x_model)return;e._x_removeModelListeners.default();let u=e._x_model.get,p=e._x_model.set,h=Ve({get(){return u()},set(w){p(w)}},{get(){return s()},set(w){c(w)}});i(h)})});d("teleport",(e,{modifiers:t,expression:r},{cleanup:n})=>{e.tagName.toLowerCase()!=="template"&&E("x-teleport can only be used on a <template> tag",e);let i=xn(r),o=e.content.cloneNode(!0).firstElementChild;e._x_teleport=o,o._x_teleportBack=e,e.setAttribute("data-teleport-template",!0),o.setAttribute("data-teleport-target",!0),e._x_forwardEvents&&e._x_forwardEvents.forEach(a=>{o.addEventListener(a,c=>{c.stopPropagation(),e.dispatchEvent(new c.constructor(c.type,c))})}),k(o,{},e);let s=(a,c,l)=>{l.includes("prepend")?c.parentNode.insertBefore(a,c):l.includes("append")?c.parentNode.insertBefore(a,c.nextSibling):c.appendChild(a)};m(()=>{s(o,i,t),A(()=>{S(o)})()}),e._x_teleportPutBack=()=>{let a=xn(r);m(()=>{s(e._x_teleport,a,t)})},n(()=>m(()=>{o.remove(),P(o)}))});var qi=document.createElement("div");function xn(e){let t=A(()=>document.querySelector(e),()=>qi)();return t||E(`Cannot find x-teleport element for selector: "${e}"`),t}var yn=()=>{};yn.inline=(e,{modifiers:t},{cleanup:r})=>{t.includes("self")?e._x_ignoreSelf=!0:e._x_ignore=!0,r(()=>{t.includes("self")?delete e._x_ignoreSelf:delete e._x_ignore})};d("ignore",yn);d("effect",A((e,{expression:t},{effect:r})=>{r(x(e,t))}));function ae(e,t,r,n){let i=e,o=c=>n(c),s={},a=(c,l)=>u=>l(c,u);if(r.includes("dot")&&(t=Ui(t)),r.includes("camel")&&(t=Wi(t)),r.includes("passive")&&(s.passive=!0),r.includes("capture")&&(s.capture=!0),r.includes("window")&&(i=window),r.includes("document")&&(i=document),r.includes("debounce")){let c=r[r.indexOf("debounce")+1]||"invalid-wait",l=tt(c.split("ms")[0])?Number(c.split("ms")[0]):250;o=Ke(o,l)}if(r.includes("throttle")){let c=r[r.indexOf("throttle")+1]||"invalid-wait",l=tt(c.split("ms")[0])?Number(c.split("ms")[0]):250;o=He(o,l)}return r.includes("prevent")&&(o=a(o,(c,l)=>{l.preventDefault(),c(l)})),r.includes("stop")&&(o=a(o,(c,l)=>{l.stopPropagation(),c(l)})),r.includes("once")&&(o=a(o,(c,l)=>{c(l),i.removeEventListener(t,o,s)})),(r.includes("away")||r.includes("outside"))&&(i=document,o=a(o,(c,l)=>{e.contains(l.target)||l.target.isConnected!==!1&&(e.offsetWidth<1&&e.offsetHeight<1||e._x_isShown!==!1&&c(l))})),r.includes("self")&&(o=a(o,(c,l)=>{l.target===e&&c(l)})),(Ji(t)||wn(t))&&(o=a(o,(c,l)=>{Yi(l,r)||c(l)})),i.addEventListener(t,o,s),()=>{i.removeEventListener(t,o,s)}}function Ui(e){return e.replace(/-/g,".")}function Wi(e){return e.toLowerCase().replace(/-(\w)/g,(t,r)=>r.toUpperCase())}function tt(e){return!Array.isArray(e)&&!isNaN(e)}function Gi(e){return[" ","_"].includes(e)?e:e.replace(/([a-z])([A-Z])/g,"$1-$2").replace(/[_\s]/,"-").toLowerCase()}function Ji(e){return["keydown","keyup"].includes(e)}function wn(e){return["contextmenu","click","mouse"].some(t=>e.includes(t))}function Yi(e,t){let r=t.filter(o=>!["window","document","prevent","stop","once","capture","self","away","outside","passive"].includes(o));if(r.includes("debounce")){let o=r.indexOf("debounce");r.splice(o,tt((r[o+1]||"invalid-wait").split("ms")[0])?2:1)}if(r.includes("throttle")){let o=r.indexOf("throttle");r.splice(o,tt((r[o+1]||"invalid-wait").split("ms")[0])?2:1)}if(r.length===0||r.length===1&&bn(e.key).includes(r[0]))return!1;let i=["ctrl","shift","alt","meta","cmd","super"].filter(o=>r.includes(o));return r=r.filter(o=>!i.includes(o)),!(i.length>0&&i.filter(s=>((s==="cmd"||s==="super")&&(s="meta"),e[`${s}Key`])).length===i.length&&(wn(e.type)||bn(e.key).includes(r[0])))}function bn(e){if(!e)return[];e=Gi(e);let t={ctrl:"control",slash:"/",space:" ",spacebar:" ",cmd:"meta",esc:"escape",up:"arrow-up",down:"arrow-down",left:"arrow-left",right:"arrow-right",period:".",comma:",",equal:"=",minus:"-",underscore:"_"};return t[e]=e,Object.keys(t).map(r=>{if(t[r]===e)return r}).filter(r=>r)}d("model",(e,{modifiers:t,expression:r},{effect:n,cleanup:i})=>{let o=e;t.includes("parent")&&(o=e.parentNode);let s=x(o,r),a;typeof r=="string"?a=x(o,`${r} = __placeholder`):typeof r=="function"&&typeof r()=="string"?a=x(o,`${r()} = __placeholder`):a=()=>{};let c=()=>{let h;return s(w=>h=w),En(h)?h.get():h},l=h=>{let w;s(F=>w=F),En(w)?w.set(h):a(()=>{},{scope:{__placeholder:h}})};typeof r=="string"&&e.type==="radio"&&m(()=>{e.hasAttribute("name")||e.setAttribute("name",r)});var u=e.tagName.toLowerCase()==="select"||["checkbox","radio"].includes(e.type)||t.includes("lazy")?"change":"input";let p=I?()=>{}:ae(e,u,t,h=>{l(Kt(e,t,h,c()))});if(t.includes("fill")&&([void 0,null,""].includes(c())||ze(e)&&Array.isArray(c())||e.tagName.toLowerCase()==="select"&&e.multiple)&&l(Kt(e,t,{target:e},c())),e._x_removeModelListeners||(e._x_removeModelListeners={}),e._x_removeModelListeners.default=p,i(()=>e._x_removeModelListeners.default()),e.form){let h=ae(e.form,"reset",[],w=>{ie(()=>e._x_model&&e._x_model.set(Kt(e,t,{target:e},c())))});i(()=>h())}e._x_model={get(){return c()},set(h){l(h)}},e._x_forceModelUpdate=h=>{h===void 0&&typeof r=="string"&&r.match(/\./)&&(h=""),window.fromModel=!0,m(()=>ge(e,"value",h)),delete window.fromModel},n(()=>{let h=c();t.includes("unintrusive")&&document.activeElement.isSameNode(e)||e._x_forceModelUpdate(h)})});function Kt(e,t,r,n){return m(()=>{if(r instanceof CustomEvent&&r.detail!==void 0)return r.detail!==null&&r.detail!==void 0?r.detail:r.target.value;if(ze(e))if(Array.isArray(n)){let i=null;return t.includes("number")?i=Ht(r.target.value):t.includes("boolean")?i=xe(r.target.value):i=r.target.value,r.target.checked?n.includes(i)?n:n.concat([i]):n.filter(o=>!Xi(o,i))}else return r.target.checked;else{if(e.tagName.toLowerCase()==="select"&&e.multiple)return t.includes("number")?Array.from(r.target.selectedOptions).map(i=>{let o=i.value||i.text;return Ht(o)}):t.includes("boolean")?Array.from(r.target.selectedOptions).map(i=>{let o=i.value||i.text;return xe(o)}):Array.from(r.target.selectedOptions).map(i=>i.value||i.text);{let i;return Ot(e)?r.target.checked?i=r.target.value:i=n:i=r.target.value,t.includes("number")?Ht(i):t.includes("boolean")?xe(i):t.includes("trim")?i.trim():i}}})}function Ht(e){let t=e?parseFloat(e):null;return Zi(t)?t:e}function Xi(e,t){return e==t}function Zi(e){return!Array.isArray(e)&&!isNaN(e)}function En(e){return e!==null&&typeof e=="object"&&typeof e.get=="function"&&typeof e.set=="function"}d("cloak",e=>queueMicrotask(()=>m(()=>e.removeAttribute(C("cloak")))));$e(()=>`[${C("init")}]`);d("init",A((e,{expression:t},{evaluate:r})=>typeof t=="string"?!!t.trim()&&r(t,{},!1):r(t,{},!1)));d("text",(e,{expression:t},{effect:r,evaluateLater:n})=>{let i=n(t);r(()=>{i(o=>{m(()=>{e.textContent=o})})})});d("html",(e,{expression:t},{effect:r,evaluateLater:n})=>{let i=n(t);r(()=>{i(o=>{m(()=>{e.innerHTML=o,e._x_ignoreSelf=!0,S(e),delete e._x_ignoreSelf})})})});ne(Pe(":",Ie(C("bind:"))));var vn=(e,{value:t,modifiers:r,expression:n,original:i},{effect:o,cleanup:s})=>{if(!t){let c={};qr(c),x(e,n)(u=>{Tt(e,u,i)},{scope:c});return}if(t==="key")return Qi(e,n);if(e._x_inlineBindings&&e._x_inlineBindings[t]&&e._x_inlineBindings[t].extract)return;let a=x(e,n);o(()=>a(c=>{c===void 0&&typeof n=="string"&&n.match(/\./)&&(c=""),m(()=>ge(e,t,c,r))})),s(()=>{e._x_undoAddedClasses&&e._x_undoAddedClasses(),e._x_undoAddedStyles&&e._x_undoAddedStyles()})};vn.inline=(e,{value:t,modifiers:r,expression:n})=>{t&&(e._x_inlineBindings||(e._x_inlineBindings={}),e._x_inlineBindings[t]={expression:n,extract:!1})};d("bind",vn);function Qi(e,t){e._x_keyExpression=t}Le(()=>`[${C("data")}]`);d("data",(e,{expression:t},{cleanup:r})=>{if(eo(e))return;t=t===""?"{}":t;let n={};fe(n,e);let i={};Gr(i,n);let o=R(e,t,{scope:i});(o===void 0||o===!0)&&(o={}),fe(o,e);let s=T(o);Te(s);let a=k(e,s);s.init&&R(e,s.init),r(()=>{s.destroy&&R(e,s.destroy),a()})});H((e,t)=>{e._x_dataStack&&(t._x_dataStack=e._x_dataStack,t.setAttribute("data-has-alpine-state",!0))});function eo(e){return I?Be?!0:e.hasAttribute("data-has-alpine-state"):!1}d("show",(e,{modifiers:t,expression:r},{effect:n})=>{let i=x(e,r);e._x_doHide||(e._x_doHide=()=>{m(()=>{e.style.setProperty("display","none",t.includes("important")?"important":void 0)})}),e._x_doShow||(e._x_doShow=()=>{m(()=>{e.style.length===1&&e.style.display==="none"?e.removeAttribute("style"):e.style.removeProperty("display")})});let o=()=>{e._x_doHide(),e._x_isShown=!1},s=()=>{e._x_doShow(),e._x_isShown=!0},a=()=>setTimeout(s),c=he(p=>p?s():o(),p=>{typeof e._x_toggleAndCascadeWithTransitions=="function"?e._x_toggleAndCascadeWithTransitions(e,p,s,o):p?a():o()}),l,u=!0;n(()=>i(p=>{!u&&p===l||(t.includes("immediate")&&(p?a():o()),c(p),l=p,u=!1)}))});d("for",(e,{expression:t},{effect:r,cleanup:n})=>{let i=ro(t),o=x(e,i.items),s=x(e,e._x_keyExpression||"index");e._x_prevKeys=[],e._x_lookup={},r(()=>to(e,i,o,s)),n(()=>{Object.values(e._x_lookup).forEach(a=>m(()=>{P(a),a.remove()})),delete e._x_prevKeys,delete e._x_lookup})});function to(e,t,r,n){let i=s=>typeof s=="object"&&!Array.isArray(s),o=e;r(s=>{no(s)&&s>=0&&(s=Array.from(Array(s).keys(),f=>f+1)),s===void 0&&(s=[]);let a=e._x_lookup,c=e._x_prevKeys,l=[],u=[];if(i(s))s=Object.entries(s).map(([f,g])=>{let b=Sn(t,g,f,s);n(v=>{u.includes(v)&&E("Duplicate key on x-for",e),u.push(v)},{scope:{index:f,...b}}),l.push(b)});else for(let f=0;f<s.length;f++){let g=Sn(t,s[f],f,s);n(b=>{u.includes(b)&&E("Duplicate key on x-for",e),u.push(b)},{scope:{index:f,...g}}),l.push(g)}let p=[],h=[],w=[],F=[];for(let f=0;f<c.length;f++){let g=c[f];u.indexOf(g)===-1&&w.push(g)}c=c.filter(f=>!w.includes(f));let Ee="template";for(let f=0;f<u.length;f++){let g=u[f],b=c.indexOf(g);if(b===-1)c.splice(f,0,g),p.push([Ee,f]);else if(b!==f){let v=c.splice(f,1)[0],O=c.splice(b-1,1)[0];c.splice(f,0,O),c.splice(b,0,v),h.push([v,O])}else F.push(g);Ee=g}for(let f=0;f<w.length;f++){let g=w[f];g in a&&(m(()=>{P(a[g]),a[g].remove()}),delete a[g])}for(let f=0;f<h.length;f++){let[g,b]=h[f],v=a[g],O=a[b],ee=document.createElement("div");m(()=>{O||E('x-for ":key" is undefined or invalid',o,b,a),O.after(ee),v.after(O),O._x_currentIfEl&&O.after(O._x_currentIfEl),ee.before(v),v._x_currentIfEl&&v.after(v._x_currentIfEl),ee.remove()}),O._x_refreshXForScope(l[u.indexOf(b)])}for(let f=0;f<p.length;f++){let[g,b]=p[f],v=g==="template"?o:a[g];v._x_currentIfEl&&(v=v._x_currentIfEl);let O=l[b],ee=u[b],ce=document.importNode(o.content,!0).firstElementChild,qt=T(O);k(ce,qt,o),ce._x_refreshXForScope=On=>{Object.entries(On).forEach(([Cn,Tn])=>{qt[Cn]=Tn})},m(()=>{v.after(ce),A(()=>S(ce))()}),typeof ee=="object"&&E("x-for key cannot be an object, it must be a string or an integer",o),a[ee]=ce}for(let f=0;f<F.length;f++)a[F[f]]._x_refreshXForScope(l[u.indexOf(F[f])]);o._x_prevKeys=u})}function ro(e){let t=/,([^,\}\]]*)(?:,([^,\}\]]*))?$/,r=/^\s*\(|\)\s*$/g,n=/([\s\S]*?)\s+(?:in|of)\s+([\s\S]*)/,i=e.match(n);if(!i)return;let o={};o.items=i[2].trim();let s=i[1].replace(r,"").trim(),a=s.match(t);return a?(o.item=s.replace(t,"").trim(),o.index=a[1].trim(),a[2]&&(o.collection=a[2].trim())):o.item=s,o}function Sn(e,t,r,n){let i={};return/^\[.*\]$/.test(e.item)&&Array.isArray(t)?e.item.replace("[","").replace("]","").split(",").map(s=>s.trim()).forEach((s,a)=>{i[s]=t[a]}):/^\{.*\}$/.test(e.item)&&!Array.isArray(t)&&typeof t=="object"?e.item.replace("{","").replace("}","").split(",").map(s=>s.trim()).forEach(s=>{i[s]=t[s]}):i[e.item]=t,e.index&&(i[e.index]=r),e.collection&&(i[e.collection]=n),i}function no(e){return!Array.isArray(e)&&!isNaN(e)}function An(){}An.inline=(e,{expression:t},{cleanup:r})=>{let n=Y(e);n._x_refs||(n._x_refs={}),n._x_refs[t]=e,r(()=>delete n._x_refs[t])};d("ref",An);d("if",(e,{expression:t},{effect:r,cleanup:n})=>{e.tagName.toLowerCase()!=="template"&&E("x-if can only be used on a <template> tag",e);let i=x(e,t),o=()=>{if(e._x_currentIfEl)return e._x_currentIfEl;let a=e.content.cloneNode(!0).firstElementChild;return k(a,{},e),m(()=>{e.after(a),A(()=>S(a))()}),e._x_currentIfEl=a,e._x_undoIf=()=>{m(()=>{P(a),a.remove()}),delete e._x_currentIfEl},a},s=()=>{e._x_undoIf&&(e._x_undoIf(),delete e._x_undoIf)};r(()=>i(a=>{a?o():s()})),n(()=>e._x_undoIf&&e._x_undoIf())});d("id",(e,{expression:t},{evaluate:r})=>{r(t).forEach(i=>_n(e,i))});H((e,t)=>{e._x_ids&&(t._x_ids=e._x_ids)});ne(Pe("@",Ie(C("on:"))));d("on",A((e,{value:t,modifiers:r,expression:n},{cleanup:i})=>{let o=n?x(e,n):()=>{};e.tagName.toLowerCase()==="template"&&(e._x_forwardEvents||(e._x_forwardEvents=[]),e._x_forwardEvents.includes(t)||e._x_forwardEvents.push(t));let s=ae(e,t,r,a=>{o(()=>{},{scope:{$event:a},params:[a]})});i(()=>s())}));rt("Collapse","collapse","collapse");rt("Intersect","intersect","intersect");rt("Focus","trap","focus");rt("Mask","mask","mask");function rt(e,t,r){d(t,n=>E(`You can't use [x-${t}] without first installing the "${e}" plugin here: https://alpinejs.dev/plugins/${r}`,n))}K.setEvaluator(xt);K.setReactivityEngine({reactive:et,effect:rn,release:nn,raw:_});var Vt=K;window.Alpine=Vt;queueMicrotask(()=>{Vt.start()});})();
+
+</script>
+</body>
+</html>
